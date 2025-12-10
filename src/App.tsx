@@ -11,6 +11,8 @@ import HowItWorks from './pages/HowItWorks';
 import VerifyID from './pages/VerifyID';
 import TermsOfService from './pages/TermsOfService';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import HelpCenter from './pages/HelpCenter';
+import SafetyGuidelines from './pages/SafetyGuidelines';
 import Profile from './pages/Profile';
 import AdminVerifications from './pages/AdminVerifications';
 
@@ -30,6 +32,8 @@ function App() {
               <Route path="/verify-id" element={<VerifyID />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/help-center" element={<HelpCenter />} />
+              <Route path="/safety-guidelines" element={<SafetyGuidelines />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin/verifications" element={<AdminVerifications />} />
             </Routes>
