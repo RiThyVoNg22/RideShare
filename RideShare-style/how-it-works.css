@@ -1,0 +1,227 @@
+/* how-it-works.css - Styles for how-it-works.html */
+
+/* How It Works Sections */
+.how-it-works-section {
+    background: var(--white);
+    padding: 4rem 0;
+}
+
+.how-it-works-section.alt-bg {
+    background: var(--light-gray);
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.step-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    position: relative;
+    border: 1px solid var(--border-light);
+    transition: transform 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+}
+
+.step-number {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: var(--primary-orange);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.step-icon {
+    font-size: 3rem;
+    color: var(--primary-blue);
+    margin: 1rem 0 1.5rem;
+}
+
+.step-card h3 {
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.step-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.step-details ul {
+    text-align: left;
+    color: var(--text-light);
+    margin-top: 1rem;
+}
+
+.step-details li {
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.step-details li::before {
+    content: '•';
+    color: var(--primary-orange);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* Safety Section */
+.safety-section {
+    background: var(--white);
+    padding: 4rem 0;
+}
+
+.safety-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.safety-feature {
+    text-align: center;
+    padding: 2rem;
+}
+
+.safety-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: var(--success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--white);
+}
+
+.safety-feature h3 {
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.safety-feature p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* FAQ Section */
+.faq-section {
+    background: var(--light-gray);
+    padding: 4rem 0;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: var(--white);
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.faq-question {
+    padding: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--white);
+    transition: background-color 0.3s ease;
+}
+
+.faq-question:hover {
+    background: var(--light-gray);
+}
+
+.faq-question h3 {
+    color: var(--text-dark);
+    margin-bottom: 0;
+}
+
+.faq-question i {
+    color: var(--primary-orange);
+    transition: transform 0.3s ease;
+}
+
+.faq-question.active i {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    display: none;
+}
+
+.faq-answer.show {
+    display: block;
+}
+
+/* Mobile Responsive for How It Works Page */
+@media (max-width: 768px) {
+    .how-it-works-section {
+        padding: 2rem 0;
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .safety-features {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-question {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .step-card {
+        padding: 2rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .step-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .safety-feature {
+        padding: 1.5rem 1rem;
+    }
+
+    .faq-question {
+        padding: 1rem;
+    }
+
+    .faq-answer {
+        padding: 0 1rem 1rem;
+    }
+}

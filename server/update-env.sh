@@ -1,0 +1,10 @@
+#!/bin/bash
+echo "⚠️  You need to manually update server/.env"
+echo ""
+echo "Replace this line:"
+echo "MONGODB_URI=mongodb://localhost:27017/rideshare"
+echo ""
+echo "With:"
+echo "MONGODB_URI=mongodb+srv://rideshare-dbvong:YOUR_PASSWORD@cluster0.poonc1p.mongodb.net/rideshare?retryWrites=true&w=majority"
+echo ""
+echo "Replace YOUR_PASSWORD with your actual Atlas password!"

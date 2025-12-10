@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Your Vehicle - RideShare Local</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/RideShare-style/auth.css">
+    <link rel="stylesheet" href="/RideShare-style/base-style.css">
+    <link rel="stylesheet" href="/RideShare-style/home.css">
+    <link rel="stylesheet" href="/RideShare-style/how-it-works.css">
+    <link rel="stylesheet" href="/RideShare-style/list-your-vehicle.css">
+    <link rel="stylesheet" href="/RideShare-style/rent.css">
+    <link rel="stylesheet" href="/RideShare-style/profile-detail.css">
+
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="home.html" class="logo">
+                    <img src="/RideShare/imge/logo.png" alt="RideShare Local" class="logo-image">
+                    <span class="logo-text">RideShare Local</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="how-it-works.html">How It Works</a></li>
+                    <li><a href="rent.html">Rent</a></li>
+                    <li><a href="list-your-vehicle.html" class="active">List Your Vehicle</a></li>
+                </ul>
+                
+                <div class="auth-buttons">
+                    <a href="/RideShare/auth.html" class="btn btn-secondary">Sign Up / Log In</a>
+                </div>
+                
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>List Your Vehicle</h1>
+            <p>Start earning money from your unused car, motorbike, or bicycle</p>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why List Your Vehicle with Us?</h2>
+                <p>Join thousands of vehicle owners earning extra income safely</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>Earn Extra Income</h3>
+                    <p>Turn your unused vehicle into a source of passive income. Average earnings: Cars $25-50/day, Motorbikes $6-12/day, Bicycles $3-8/day.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Verified Renters</h3>
+                    <p>All renters are ID-verified and rated by the community. You have full control over who rents your vehicle.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>GPS Tracking</h3>
+                    <p>Track your vehicle's location in real-time during rentals for complete peace of mind.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Secure Payments</h3>
+                    <p>Automatic payment processing with deposit protection. Get paid instantly after each rental.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Listing Form Section -->
+    <section class="listing-form-section">
+        <div class="container">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>List Your Vehicle</h2>
+                    <p>Complete the form below to start earning from your vehicle</p>
+                </div>
+                
+                <form id="listVehicleForm" class="listing-form" enctype="multipart/form-data">
+                    <!-- Vehicle Information -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-car"></i> Vehicle Information</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vehicleTitle">Vehicle Title*</label>
+                                <input type="text" id="vehicleTitle" name="vehicleTitle" required placeholder="e.g., Honda Click 2020">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehicleType">Vehicle Type*</label>
+                                <select id="vehicleType" name="vehicleType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="car">Car</option>
+                                    <option value="motorbike">Motorbike</option>
+                                    <option value="bicycle">Bicycle</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vehicleBrand">Brand*</label>
+                                <input type="text" id="vehicleBrand" name="vehicleBrand" required placeholder="e.g., Honda, Toyota, Trek">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehicleModel">Model*</label>
+                                <input type="text" id="vehicleModel" name="vehicleModel" required placeholder="e.g., Click, Camry, Mountain Bike">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vehicleYear">Year*</label>
+                                <select id="vehicleYear" name="vehicleYear" required>
+                                    <option value="">Select Year</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2015">2015</option>
+                                    <option value="older">Older</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehicleCondition">Condition*</label>
+                                <select id="vehicleCondition" name="vehicleCondition" required>
+                                    <option value="">Select Condition</option>
+                                    <option value="excellent">Excellent</option>
+                                    <option value="good">Good</option>
+                                    <option value="fair">Fair</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vehicleDescription">Description*</label>
+                            <textarea id="vehicleDescription" name="vehicleDescription" rows="4" required placeholder="Describe your vehicle, its features, condition, and any special instructions for renters..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Photos -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-camera"></i> Photos</h3>
+                        <p class="section-description">Upload at least 3 high-quality photos of your vehicle</p>
+                        
+                        <div class="photo-upload-container">
+                            <div class="photo-upload-area" id="photoUpload">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag and drop photos here or click to select</p>
+                                <input type="file" id="vehiclePhotos" name="vehiclePhotos" multiple accept="image/*" hidden>
+                            </div>
+                            <div class="photo-preview-container" id="photoPreview"></div>
+                        </div>
+                    </div>
+
+                    <!-- Pricing -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-tag"></i> Pricing</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dailyPrice">Daily Price (USD)*</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon">$</span>
+                                    <input type="number" id="dailyPrice" name="dailyPrice" step="0.01" min="1" required placeholder="0.00">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="depositAmount">Security Deposit (USD)*</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon">$</span>
+                                    <input type="number" id="depositAmount" name="depositAmount" step="0.01" min="10" required placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pricing-suggestions">
+                            <h4>Pricing Suggestions:</h4>
+                            <div class="suggestion-grid">
+                                <div class="suggestion-item">
+                                    <strong>Cars:</strong> $25-50/day | Deposit: $150-300
+                                </div>
+                                <div class="suggestion-item">
+                                    <strong>Motorbikes:</strong> $6-12/day | Deposit: $30-80
+                                </div>
+                                <div class="suggestion-item">
+                                    <strong>Bicycles:</strong> $3-8/day | Deposit: $15-40
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vehicleCity">City*</label>
+                                <select id="vehicleCity" name="vehicleCity" required>
+                                    <option value="">Select City</option>
+                                    <option value="phnom-penh">Phnom Penh</option>
+                                    <option value="siem-reap">Siem Reap</option>
+                                    <option value="sihanoukville">Sihanoukville</option>
+                                    <option value="battambang">Battambang</option>
+                                    <option value="kampot">Kampot</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehicleDistrict">District/Area*</label>
+                                <input type="text" id="vehicleDistrict" name="vehicleDistrict" required placeholder="e.g., Daun Penh, BKK1, Russian Market">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pickupLocation">Pickup Location*</label>
+                            <textarea id="pickupLocation" name="pickupLocation" rows="3" required placeholder="Provide detailed pickup location and any landmarks..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Availability -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-calendar"></i> Availability</h3>
+                        
+                        <div class="form-group">
+                            <label>Available Days*</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="availableDays[]" value="monday">
+                                    <span class="checkmark"></span>
+                                    Monday
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="availableDays[]" value="tuesday">
+                                    <span class="checkmark"></span>
+                                    Tuesday
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="availableDays[]" value="wednesday">
+                                    <span class="checkmark"></span>
+                                    Wednesday
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="availableDays[]" value="thursday">
+                                    <span class="checkmark"></span>
+                                    Thursday
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="availableDays[]" value="friday">
+                                    <span class="checkmark"></span>
+                                    Friday
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="availableDays[]" value="saturday">
+                                    <span class="checkmark"></span>
+                                    Saturday
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="availableDays[]" value="sunday">
+                                    <span class="checkmark"></span>
+                                    Sunday
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="availableFrom">Available From*</label>
+                                <input type="time" id="availableFrom" name="availableFrom" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="availableTo">Available Until*</label>
+                                <input type="time" id="availableTo" name="availableTo" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-phone"></i> Contact Information</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ownerName">Your Name*</label>
+                                <input type="text" id="ownerName" name="ownerName" required placeholder="Full name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactNumber">Phone Number*</label>
+                                <input type="tel" id="contactNumber" name="contactNumber" required placeholder="+855 XX XXX XXX">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address*</label>
+                            <input type="email" id="contactEmail" name="contactEmail" required placeholder="your.email@example.com">
+                        </div>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-list"></i> Features & Amenities</h3>
+                        
+                        <div class="features-grid">
+                            <!-- Car Features -->
+                            <div class="feature-category" id="carFeatures" style="display: none;">
+                                <h4>Car Features</h4>
+                                <div class="checkbox-grid">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="air-conditioning">
+                                        <span class="checkmark"></span>
+                                        Air Conditioning
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="gps">
+                                        <span class="checkmark"></span>
+                                        GPS Navigation
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="automatic">
+                                        <span class="checkmark"></span>
+                                        Automatic Transmission
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="bluetooth">
+                                        <span class="checkmark"></span>
+                                        Bluetooth
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="usb-charging">
+                                        <span class="checkmark"></span>
+                                        USB Charging
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="insurance">
+                                        <span class="checkmark"></span>
+                                        Insurance Included
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Motorbike Features -->
+                            <div class="feature-category" id="motorbikeFeatures" style="display: none;">
+                                <h4>Motorbike Features</h4>
+                                <div class="checkbox-grid">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="helmet-included">
+                                        <span class="checkmark"></span>
+                                        Helmet Included
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="automatic-scooter">
+                                        <span class="checkmark"></span>
+                                        Automatic
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="fuel-efficient">
+                                        <span class="checkmark"></span>
+                                        Fuel Efficient
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="storage-box">
+                                        <span class="checkmark"></span>
+                                        Storage Box
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="rain-cover">
+                                        <span class="checkmark"></span>
+                                        Rain Cover
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="phone-holder">
+                                        <span class="checkmark"></span>
+                                        Phone Holder
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Bicycle Features -->
+                            <div class="feature-category" id="bicycleFeatures" style="display: none;">
+                                <h4>Bicycle Features</h4>
+                                <div class="checkbox-grid">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="helmet-bicycle">
+                                        <span class="checkmark"></span>
+                                        Helmet Included
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="lock-included">
+                                        <span class="checkmark"></span>
+                                        Lock Included
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="basket">
+                                        <span class="checkmark"></span>
+                                        Basket
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="lights">
+                                        <span class="checkmark"></span>
+                                        Lights
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="multi-speed">
+                                        <span class="checkmark"></span>
+                                        Multi-Speed
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="features[]" value="comfortable-seat">
+                                        <span class="checkmark"></span>
+                                        Comfortable Seat
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-file-contract"></i> Terms & Conditions</h3>
+                        
+                        <div class="terms-container">
+                            <label class="checkbox-item terms-checkbox">
+                                <input type="checkbox" name="agreeTerms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="/RideShare/terms-of-service.html" target="_blank">Terms of Service</a> and <a href="/RideShare/privacy-policy.html" target="_blank">Privacy Policy</a>
+                            </label>
+                            
+                            <label class="checkbox-item terms-checkbox">
+                                <input type="checkbox" name="agreeVerification" required>
+                                <span class="checkmark"></span>
+                                I confirm that I am the legal owner of this vehicle and have the right to rent it out
+                            </label>
+                            
+                            <label class="checkbox-item terms-checkbox">
+                                <input type="checkbox" name="agreeInsurance" required>
+                                <span class="checkmark"></span>
+                                I understand that I am responsible for maintaining valid insurance and registration for my vehicle
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-submit">
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fas fa-plus-circle"></i>
+                            List My Vehicle
+                        </button>
+                        <p class="submit-note">Your listing will be reviewed and approved within 24 hours</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Earnings Calculator -->
+    <section class="earnings-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Calculate Your Potential Earnings</h2>
+                <p>See how much you could earn by listing your vehicle</p>
+            </div>
+            
+            <div class="calculator-container">
+                <div class="calculator-inputs">
+                    <div class="calc-group">
+                        <label for="calcVehicleType">Vehicle Type</label>
+                        <select id="calcVehicleType" onchange="updateCalculator()">
+                            <option value="car">Car</option>
+                            <option value="motorbike">Motorbike</option>
+                            <option value="bicycle">Bicycle</option>
+                        </select>
+                    </div>
+                    
+                    <div class="calc-group">
+                        <label for="calcDailyRate">Daily Rate ($)</label>
+                        <input type="number" id="calcDailyRate" value="30" min="1" onchange="updateCalculator()">
+                    </div>
+                    
+                    <div class="calc-group">
+                        <label for="calcDaysPerMonth">Days Rented/Month</label>
+                        <input type="number" id="calcDaysPerMonth" value="15" min="1" max="31" onchange="updateCalculator()">
+                    </div>
+                </div>
+                
+                <div class="calculator-results">
+                    <div class="earning-item">
+                        <span class="earning-label">Daily Earnings:</span>
+                        <span class="earning-value" id="dailyEarning">$27.00</span>
+                    </div>
+                    <div class="earning-item">
+                        <span class="earning-label">Monthly Earnings:</span>
+                        <span class="earning-value" id="monthlyEarning">$405.00</span>
+                    </div>
+                    <div class="earning-item">
+                        <span class="earning-label">Yearly Earnings:</span>
+                        <span class="earning-value" id="yearlyEarning">$4,860.00</span>
+                    </div>
+                    <div class="commission-note">
+                        <small>*After 10% platform commission</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>RideShare Local</h4>
+                    <p>Connecting vehicle owners with renters across Cambodia for safe, transparent, and convenient transportation solutions.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="how-it-works.html">How It Works</a>
+                    <a href="rent.html">Rent a Vehicle</a>
+                    <a href="list-your-vehicle.html">List Your Vehicle</a>
+                    <a href="#support">Support</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="#help">Help Center</a>
+                    <a href="#safety">Safety Guidelines</a>
+                    <a href="/RideShare/terms-of-service.html">Terms of Service</a>
+                    <a href="/RideShare/privacy-policy.html">Privacy Policy</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p>Email: support@ridesharelocal.com</p>
+                    <p>Phone: +855 23 123 456</p>
+                    <p>Phnom Penh, Cambodia</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 RideShare Local. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+window.addEventListener('load', function() {
+    console.log('Profile override loading...');
+    
+    // Wait for Firebase auth
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log('User detected:', user.email);
+            
+            // Wait a bit for other scripts to finish
+            setTimeout(function() {
+                const authButtons = document.querySelector('.auth-buttons');
+                
+                if (authButtons) {
+                    const displayName = user.displayName || user.email.split('@')[0];
+                    
+                    // Replace with profile button
+                    authButtons.innerHTML = `
+                        <button class="btn btn-profile" id="profileBtn">
+                            <i class="fas fa-user-circle"></i> ${displayName}
+                        </button>
+                    `;
+                    
+                    // Add styling
+                    const btn = document.getElementById('profileBtn');
+                    btn.style.cssText = `
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        padding: 0.6rem 1.5rem;
+                        background: white;
+                        color: #1e3a5f;
+                        border: 2px solid #1e3a5f;
+                        border-radius: 25px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    `;
+                    
+                    // Add click event
+                    btn.onclick = function() {
+                        if (typeof openProfileModal === 'function') {
+                            openProfileModal();
+                        } else {
+                            alert('Profile modal not loaded');
+                        }
+                    };
+                    
+                    // Add hover effect
+                    btn.onmouseover = function() {
+                        this.style.background = '#1e3a5f';
+                        this.style.color = 'white';
+                    };
+                    btn.onmouseout = function() {
+                        this.style.background = 'white';
+                        this.style.color = '#1e3a5f';
+                    };
+                    
+                    console.log('Profile button created!');
+                } else {
+                    console.error('Auth buttons container not found');
+                }
+            }, 1500);
+        }
+    });
+});
+</script>
+
+
+    <script src="/RideShare-js/profile-modal.js"></script>  
+
+    <script src="/RideShare-js/base.js"></script>
+    <script src="/RideShare-js/list-your-vchicle.js"></script>
+    <script src="/RideShare-js/chat-system.js"></script> 
+    <script src="/RideShare-js/chat-notifications.js"></script> 
+    <script src="/RideShare-js/map-location-picker.js"></script>
+    <script src="/RideShare-js/notification-system.js"></script>
+    <script src="/RideShare-js/edit-vehicle-handler.js"></script>
+    <script src="/RideShare-js/location-validation.js"></script>
+
+
+            <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+        <!-- Firebase Configuration and Services -->
+    <script src="/RideShare-js/firebase-config.js"></script>
+    <script src="/RideShare-js/firebase-database.js"></script>
+    <script src="/RideShare-js/firebase-auth.js"></script>
+    <script src="/RideShare-js/firebase-storage.js"></script>
+    <script src="/RideShare-js/firebase-complete-booking.js"></script>
+    <script src="/RideShare-js/firebase-list-vehicle-final.js"></script>
+    <script src="/RideShare-js/firebase-list-vehicle.js"></script>
+
+    
+
+
+
+
+
+
+
+
+</body>
+</html>

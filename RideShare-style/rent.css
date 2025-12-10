@@ -1,0 +1,356 @@
+/* rent.css - Styles for rent.html */
+
+/* Rent Section */
+.rent-section {
+    background: var(--white);
+    padding: 4rem 0;
+}
+
+/* Search Filters */
+.search-filters {
+    background: var(--light-gray);
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 3rem;
+    box-shadow: var(--shadow);
+}
+
+.filter-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: end;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 150px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.filter-select,
+.filter-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-light);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    background: var(--white);
+    transition: border-color 0.3s ease;
+}
+
+.filter-select:focus,
+.filter-input:focus {
+    outline: none;
+    border-color: var(--primary-orange);
+}
+
+.search-filter-btn {
+    padding: 0.8rem 2rem;
+    white-space: nowrap;
+}
+
+/* Vehicles Grid */
+.vehicles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.vehicle-card {
+    background: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-light);
+}
+
+.vehicle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.vehicle-image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.vehicle-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.vehicle-card:hover .vehicle-image {
+    transform: scale(1.05);
+}
+
+.vehicle-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--success);
+    color: var(--white);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.vehicle-badge.rented {
+    background: var(--danger);
+}
+
+.vehicle-favorite {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.vehicle-favorite:hover {
+    background: var(--white);
+    color: var(--danger);
+}
+
+.vehicle-favorite.active {
+    color: var(--danger);
+}
+
+.vehicle-details {
+    padding: 1.5rem;
+}
+
+.vehicle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.vehicle-header h3 {
+    color: var(--text-dark);
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.vehicle-type {
+    background: var(--primary-orange);
+    color: var(--white);
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.vehicle-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.vehicle-location i {
+    color: var(--primary-orange);
+}
+
+.vehicle-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature {
+    background: rgba(30, 58, 95, 0.1);
+    color: var(--primary-blue);
+    padding: 0.3rem 0.6rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.vehicle-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.stars {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.stars i {
+    color: #ffc107;
+    font-size: 0.9rem;
+}
+
+.rating-text {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.vehicle-pricing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+}
+
+.price-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.daily-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+.deposit {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.rent-btn {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.rent-btn:disabled {
+    background: var(--border-light);
+    color: var(--text-light);
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Load More Section */
+.load-more-section {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.load-more-btn {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.no-results-content {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.no-results i {
+    font-size: 4rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.no-results h3 {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.no-results p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Mobile Responsive for Rent Page */
+@media (max-width: 768px) {
+    .rent-section {
+        padding: 2rem 0;
+    }
+
+    .search-filters {
+        padding: 1.5rem;
+    }
+
+    .filter-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .filter-group {
+        min-width: 100%;
+    }
+
+    .vehicles-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .vehicle-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .vehicle-pricing {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+
+    .rent-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-filters {
+        padding: 1rem;
+        margin: 0 -10px 2rem;
+        border-radius: 10px;
+    }
+
+    .vehicle-details {
+        padding: 1rem;
+    }
+
+    .vehicle-features {
+        justify-content: center;
+    }
+
+    .feature {
+        text-align: center;
+        flex: 1;
+        min-width: fit-content;
+    }
+}
+
+/* Hide email verification warning */
+.email-warning,
+[data-warning="email-verification"] {
+    display: none !important;
+}

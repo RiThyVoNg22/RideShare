@@ -1,0 +1,28 @@
+MongoDB Host Configuration for RideShare Local
+
+===========================================
+LOCAL MONGODB (Current Setup)
+===========================================
+
+Host: localhost:27017
+
+In MongoDB Compass:
+- Host field: localhost:27017
+- Port: 27017 (included in host)
+- Database: rideshare
+
+===========================================
+IF USING MONGODB ATLAS (Cloud)
+===========================================
+
+Host format: cluster0.xxxxx.mongodb.net
+
+Example:
+- Host: cluster0.abc123.mongodb.net
+- Port: (usually not needed, uses default)
+- Database: rideshare
+
+You'll get the exact host from your Atlas cluster connection string.
+
+===========================================
+
