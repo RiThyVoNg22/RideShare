@@ -11,7 +11,7 @@ Node.js/Express REST API with MongoDB for RideShare Local platform.
 
 2. **Create `.env` file:**
    ```env
-   PORT=5000
+   PORT=5001
    MONGODB_URI=mongodb://localhost:27017/rideshare
    JWT_SECRET=your-secret-key-here
    JWT_EXPIRE=7d

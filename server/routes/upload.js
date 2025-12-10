@@ -48,9 +48,15 @@ router.post('/image', protect, upload.single('image'), (req, res) => {
       });
     }
 
+    // Get the base URL from the request
+    const protocol = req.protocol;
+    const host = req.get('host');
+    const baseUrl = `${protocol}://${host}`;
+    const fullUrl = `${baseUrl}/uploads/${req.file.filename}`;
+
     res.json({
       success: true,
-      url: `/uploads/${req.file.filename}`,
+      url: fullUrl,
       filename: req.file.filename
     });
   } catch (error) {
@@ -71,8 +77,13 @@ router.post('/images', protect, upload.array('images', 10), (req, res) => {
       });
     }
 
+    // Get the base URL from the request
+    const protocol = req.protocol;
+    const host = req.get('host');
+    const baseUrl = `${protocol}://${host}`;
+
     const urls = req.files.map(file => ({
-      url: `/uploads/${file.filename}`,
+      url: `${baseUrl}/uploads/${file.filename}`,
       filename: file.filename
     }));
 

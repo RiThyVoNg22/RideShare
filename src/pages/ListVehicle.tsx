@@ -255,7 +255,8 @@ const ListVehicle: React.FC = () => {
         const uploadResponse = await uploadAPI.uploadImages(formData.images);
         const newUrls = uploadResponse.images.map((img: any) => {
           const url = img.url || img;
-          return url.startsWith('http') ? url : `http://127.0.0.1:5001${url}`;
+          // If URL is already full URL, use it; otherwise it should already be from backend
+          return url.startsWith('http') ? url : `http://localhost:5001${url}`;
         });
         imageUrls = [...imageUrls, ...newUrls];
       }

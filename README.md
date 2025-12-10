@@ -37,12 +37,12 @@ npm install
 
 **Frontend** (create `.env` in root):
 ```
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=http://localhost:5001/api
 ```
 
 **Backend** (create `.env` in `server/` folder):
 ```
-PORT=5000
+PORT=5001
 MONGODB_URI=mongodb://localhost:27017/rideshare
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 JWT_EXPIRE=7d
@@ -66,7 +66,7 @@ cd server
 npm run dev
 ```
 
-The API will run on `http://localhost:5000`
+The API will run on `http://localhost:5001`
 
 ### 6. Start Frontend
 
@@ -75,7 +75,9 @@ The API will run on `http://localhost:5000`
 npm run dev
 ```
 
-The app will open at `http://localhost:3000`
+The app will open at `http://localhost:3001`
+
+> **📖 Quick Start**: See [QUICK_START.md](./QUICK_START.md) for detailed step-by-step instructions.
 
 ## 📁 Project Structure
 

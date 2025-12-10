@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { vehiclesAPI } from '../services/api';
+import { normalizeImageUrl } from '../utils/imageUtils';
 import { Heart, MapPin } from 'lucide-react';
 
 interface Vehicle {
@@ -221,7 +222,7 @@ const Rent: React.FC = () => {
                 <div key={vehicle._id} className="vehicle-card bg-white rounded-2xl overflow-hidden shadow-md border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1">
                   <div className="vehicle-image-container relative overflow-hidden">
                     <img
-                      src={vehicle.images?.[0] || vehicle.mainPhoto || '/RideShare/imge/placeholder.png'}
+                      src={normalizeImageUrl(vehicle.images?.[0] || vehicle.mainPhoto)}
                       alt={vehicle.name}
                       className="vehicle-image w-full h-48 object-cover transition-transform"
                       onError={(e) => {

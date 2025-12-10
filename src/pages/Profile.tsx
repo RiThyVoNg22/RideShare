@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { bookingsAPI, vehiclesAPI, chatAPI, usersAPI, authAPI, uploadAPI } from '../services/api';
+import { normalizeImageUrl } from '../utils/imageUtils';
 import { 
   User, Calendar, MessageSquare, Car, Settings, 
   LogOut, Edit, Trash2, Eye, Bell, Lock,
@@ -887,7 +888,7 @@ const Profile: React.FC = () => {
                     <div key={vehicle._id} className="card overflow-hidden hover:shadow-lg transition-all">
                       <div className="relative h-48">
                         <img
-                          src={vehicle.images?.[0] || vehicle.mainPhoto || '/RideShare/imge/placeholder.png'}
+                          src={normalizeImageUrl(vehicle.images?.[0] || vehicle.mainPhoto)}
                           alt={vehicle.name}
                           className="w-full h-full object-cover"
                           onError={(e) => {

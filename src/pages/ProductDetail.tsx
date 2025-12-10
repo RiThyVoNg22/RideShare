@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { vehiclesAPI, bookingsAPI } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
+import { normalizeImageUrls } from '../utils/imageUtils';
 import Modal from '../components/Modal';
 import { MapPin, Heart, CheckCircle } from 'lucide-react';
 
@@ -158,7 +159,9 @@ const ProductDetail: React.FC = () => {
   }
 
   const { days, subtotal, serviceFee, total } = calculateTotal();
-  const images = vehicle.images || (vehicle.mainPhoto ? [vehicle.mainPhoto] : ['/RideShare/imge/placeholder.png']);
+  const images = vehicle.images 
+    ? normalizeImageUrls(vehicle.images) 
+    : (vehicle.mainPhoto ? [normalizeImageUrl(vehicle.mainPhoto)] : ['/RideShare/imge/placeholder.png']);
 
   return (
     <>
