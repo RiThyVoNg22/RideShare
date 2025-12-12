@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 import { UserPlus, Search, CalendarCheck, Key, UserCheck, Car, Users, DollarSign, Shield, MapPin, CreditCard, Headphones, FileText, Star, ChevronDown, ChevronUp } from 'lucide-react';
 
 
 const HowItWorks: React.FC = () => {
+  const { t } = useLanguage();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const toggleFaq = (index: number) => {
@@ -15,8 +17,8 @@ const HowItWorks: React.FC = () => {
       {/* Page Header */}
       <section className="page-header bg-primary-blue text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">How RideShare Local Works</h1>
-          <p className="text-xl opacity-90">Learn how to rent or list vehicles safely and easily on our platform</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.howItWorks.title}</h1>
+          <p className="text-xl opacity-90">{t.howItWorks.subtitle}</p>
         </div>
       </section>
 
@@ -24,8 +26,8 @@ const HowItWorks: React.FC = () => {
       <section className="how-it-works-section py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="section-header text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">For Renters</h2>
-            <p className="text-lg text-gray-600">Find and rent the perfect vehicle in just a few simple steps</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">{t.howItWorks.forRenters}</h2>
+            <p className="text-lg text-gray-600">{t.howItWorks.forRentersDesc}</p>
           </div>
           
           <div className="steps-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -36,27 +38,27 @@ const HowItWorks: React.FC = () => {
               <div className="step-icon text-primary-blue text-5xl my-4">
                 <UserPlus className="w-12 h-12 mx-auto" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Create Your Account</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step1Renter}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Sign up with your email and verify your government-issued ID for secure access to the platform.
+                {t.howItWorks.step1RenterDesc}
               </p>
               <div className="step-details text-left mt-4">
                 <ul className="text-gray-600 space-y-2">
                   <li className="flex items-start">
                     <span className="text-primary-orange font-bold mr-2">•</span>
-                    <span>Provide basic contact information</span>
+                    <span>{t.auth.firstName} {t.auth.lastName}, {t.auth.email}, {t.auth.phone}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange font-bold mr-2">•</span>
-                    <span>Upload clear photo of your ID</span>
+                    <span>{t.auth.idVerificationRequired}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange font-bold mr-2">•</span>
-                    <span>Complete phone number verification</span>
+                    <span>{t.auth.phone} {t.common.verification || 'verification'}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange font-bold mr-2">•</span>
-                    <span>Set up secure payment method</span>
+                    <span>{t.howItWorks.securePayments}</span>
                   </li>
                 </ul>
               </div>
@@ -69,9 +71,9 @@ const HowItWorks: React.FC = () => {
               <div className="step-icon text-primary-blue text-5xl my-4">
                 <Search className="w-12 h-12 mx-auto" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Search & Browse</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step2Renter}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Use GPS-enabled search to find available vehicles near you with transparent pricing and detailed information.
+                {t.howItWorks.step2RenterDesc}
               </p>
               <div className="step-details text-left mt-4">
                 <ul className="text-gray-600 space-y-2">
@@ -102,9 +104,9 @@ const HowItWorks: React.FC = () => {
               <div className="step-icon text-primary-blue text-5xl my-4">
                 <CalendarCheck className="w-12 h-12 mx-auto" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Book & Pay</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step3Renter}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Select your rental dates, make secure payment, and communicate directly with the vehicle owner.
+                {t.howItWorks.step3RenterDesc}
               </p>
               <div className="step-details text-left mt-4">
                 <ul className="text-gray-600 space-y-2">
@@ -135,9 +137,9 @@ const HowItWorks: React.FC = () => {
               <div className="step-icon text-primary-blue text-5xl my-4">
                 <Key className="w-12 h-12 mx-auto" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Pick Up & Enjoy</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step4Renter}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Meet the owner, inspect the vehicle, and start your journey with complete peace of mind.
+                {t.howItWorks.step4RenterDesc}
               </p>
               <div className="step-details text-left mt-4">
                 <ul className="text-gray-600 space-y-2">
@@ -168,8 +170,8 @@ const HowItWorks: React.FC = () => {
       <section className="how-it-works-section alt-bg py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="section-header text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">For Vehicle Owners</h2>
-            <p className="text-lg text-gray-600">Start earning from your unused vehicle with complete security</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">{t.howItWorks.forOwners}</h2>
+            <p className="text-lg text-gray-600">{t.howItWorks.forOwnersDesc}</p>
           </div>
           
           <div className="steps-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -180,9 +182,9 @@ const HowItWorks: React.FC = () => {
               <div className="step-icon text-primary-blue text-5xl my-4">
                 <UserCheck className="w-12 h-12 mx-auto" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Register & Verify</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step1Owner}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Create your owner account and complete verification to start listing your vehicles.
+                {t.howItWorks.step1OwnerDesc}
               </p>
               <div className="step-details text-left mt-4">
                 <ul className="text-gray-600 space-y-2">
@@ -213,9 +215,9 @@ const HowItWorks: React.FC = () => {
               <div className="step-icon text-primary-blue text-5xl my-4">
                 <Car className="w-12 h-12 mx-auto" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">List Your Vehicle</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step2Owner}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Upload photos, set your pricing, and describe your vehicle with all important details.
+                {t.howItWorks.step2OwnerDesc}
               </p>
               <div className="step-details text-left mt-4">
                 <ul className="text-gray-600 space-y-2">
@@ -246,9 +248,9 @@ const HowItWorks: React.FC = () => {
               <div className="step-icon text-primary-blue text-5xl my-4">
                 <Users className="w-12 h-12 mx-auto" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Accept Bookings</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step3Owner}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Review rental requests, communicate with renters, and approve bookings that meet your criteria.
+                {t.howItWorks.step3OwnerDesc}
               </p>
               <div className="step-details text-left mt-4">
                 <ul className="text-gray-600 space-y-2">
@@ -279,9 +281,9 @@ const HowItWorks: React.FC = () => {
               <div className="step-icon text-primary-blue text-5xl my-4">
                 <DollarSign className="w-12 h-12 mx-auto" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Earn Money</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step4Owner}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Hand over your vehicle, track the rental through GPS, and receive payment automatically.
+                {t.howItWorks.step4OwnerDesc}
               </p>
               <div className="step-details text-left mt-4">
                 <ul className="text-gray-600 space-y-2">
@@ -312,8 +314,8 @@ const HowItWorks: React.FC = () => {
       <section className="safety-section py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="section-header text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">Safety & Security Features</h2>
-            <p className="text-lg text-gray-600">Your safety and security are our top priorities</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">{t.howItWorks.safetyTitle}</h2>
+            <p className="text-lg text-gray-600">{t.howItWorks.safetySubtitle}</p>
           </div>
           
           <div className="safety-features grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -321,32 +323,32 @@ const HowItWorks: React.FC = () => {
               <div className="safety-icon w-20 h-20 bg-primary-orange rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">ID Verification</h3>
-              <p className="text-gray-600">All users must verify their identity with government-issued ID before using the platform.</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{t.howItWorks.idVerification}</h3>
+              <p className="text-gray-600">{t.howItWorks.idVerificationDesc}</p>
             </div>
             
             <div className="safety-feature text-center">
               <div className="safety-icon w-20 h-20 bg-primary-orange rounded-full flex items-center justify-center mx-auto mb-4">
                 <MapPin className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">GPS Tracking</h3>
-              <p className="text-gray-600">Real-time location tracking ensures vehicle security and helps resolve any disputes.</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{t.howItWorks.gpsTracking}</h3>
+              <p className="text-gray-600">{t.howItWorks.gpsTrackingDesc}</p>
             </div>
             
             <div className="safety-feature text-center">
               <div className="safety-icon w-20 h-20 bg-primary-orange rounded-full flex items-center justify-center mx-auto mb-4">
                 <CreditCard className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">Secure Payments</h3>
-              <p className="text-gray-600">All payments are processed securely with automatic deposit handling and refunds.</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{t.howItWorks.securePayments}</h3>
+              <p className="text-gray-600">{t.howItWorks.securePaymentsDesc}</p>
             </div>
             
             <div className="safety-feature text-center">
               <div className="safety-icon w-20 h-20 bg-primary-orange rounded-full flex items-center justify-center mx-auto mb-4">
                 <Headphones className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">24/7 Support</h3>
-              <p className="text-gray-600">Round-the-clock customer support with dispute resolution for any issues.</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{t.howItWorks.support247}</h3>
+              <p className="text-gray-600">{t.howItWorks.support247Desc}</p>
             </div>
             
             <div className="safety-feature text-center">
@@ -425,17 +427,17 @@ const HowItWorks: React.FC = () => {
       {/* CTA Section */}
       <section className="cta-section py-16 bg-primary-blue text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Get Started?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.howItWorks.readyToStart}</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-            Join RideShare Local today and experience the safest way to rent or share vehicles in Cambodia.
+            {t.howItWorks.readyToStartDesc}
           </p>
           
           <div className="cta-buttons flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/rent" className="btn bg-primary-orange text-white hover:bg-orange-600 px-8 py-3 rounded-full font-semibold">
-              Find a Vehicle
+              {t.howItWorks.findVehicle}
             </Link>
             <Link to="/list-vehicle" className="btn bg-white text-primary-blue hover:bg-gray-100 px-8 py-3 rounded-full font-semibold">
-              List Your Vehicle
+              {t.nav.listVehicle}
             </Link>
           </div>
         </div>

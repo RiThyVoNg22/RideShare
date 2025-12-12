@@ -10,69 +10,72 @@ import {
   FileText,
   Lock
 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const SafetyGuidelines: React.FC = () => {
+  const { t } = useLanguage();
+  
   const guidelines = [
     {
-      category: 'For Renters',
+      category: t.safetyGuidelines.forRenters,
       icon: <User className="w-6 h-6" />,
       color: 'bg-blue-500',
       items: [
         {
-          title: 'Verify Before Booking',
-          description: 'Always check the vehicle owner\'s verification status and read reviews from previous renters before making a booking.',
+          title: t.safetyGuidelines.verifyBeforeBooking,
+          description: t.safetyGuidelines.verifyBeforeBookingDesc,
           icon: <CheckCircle className="w-5 h-5" />
         },
         {
-          title: 'Inspect the Vehicle',
-          description: 'Before accepting the vehicle, thoroughly inspect it for any existing damage. Take photos and report any issues immediately.',
+          title: t.safetyGuidelines.inspectVehicle,
+          description: t.safetyGuidelines.inspectVehicleDesc,
           icon: <Car className="w-5 h-5" />
         },
         {
-          title: 'Meet in Safe Locations',
-          description: 'Arrange to meet the owner in a public, well-lit location for vehicle pickup and return. Avoid isolated areas.',
+          title: t.safetyGuidelines.meetSafeLocations,
+          description: t.safetyGuidelines.meetSafeLocationsDesc,
           icon: <Shield className="w-5 h-5" />
         },
         {
-          title: 'Keep Communication on Platform',
-          description: 'Use our secure messaging system for all communications. This protects both parties and provides a record of conversations.',
+          title: t.safetyGuidelines.keepCommunication,
+          description: t.safetyGuidelines.keepCommunicationDesc,
           icon: <MessageSquare className="w-5 h-5" />
         },
         {
-          title: 'Follow Traffic Laws',
-          description: 'Always drive responsibly, follow all traffic laws, and ensure you have a valid driver\'s license. You are responsible for any violations.',
+          title: t.safetyGuidelines.followTrafficLaws,
+          description: t.safetyGuidelines.followTrafficLawsDesc,
           icon: <AlertTriangle className="w-5 h-5" />
         }
       ]
     },
     {
-      category: 'For Vehicle Owners',
+      category: t.safetyGuidelines.forOwners,
       icon: <Car className="w-6 h-6" />,
       color: 'bg-green-500',
       items: [
         {
-          title: 'Verify Your Identity',
-          description: 'Complete ID verification to build trust with renters. Verified owners receive priority in search results.',
+          title: t.safetyGuidelines.verifyIdentity,
+          description: t.safetyGuidelines.verifyIdentityDesc,
           icon: <CheckCircle className="w-5 h-5" />
         },
         {
-          title: 'Maintain Your Vehicle',
-          description: 'Keep your vehicle in excellent condition. Regular maintenance ensures safety and positive reviews from renters.',
+          title: t.safetyGuidelines.maintainVehicle,
+          description: t.safetyGuidelines.maintainVehicleDesc,
           icon: <Car className="w-5 h-5" />
         },
         {
-          title: 'Document Everything',
-          description: 'Take photos of your vehicle before and after each rental. Document any damage and communicate clearly with renters.',
+          title: t.safetyGuidelines.documentEverythingOwner,
+          description: t.safetyGuidelines.documentEverythingOwnerDesc,
           icon: <FileText className="w-5 h-5" />
         },
         {
-          title: 'Set Clear Expectations',
-          description: 'Provide accurate vehicle descriptions, clear photos, and detailed terms. Be transparent about any limitations or requirements.',
+          title: t.safetyGuidelines.setClearExpectations,
+          description: t.safetyGuidelines.setClearExpectationsDesc,
           icon: <MessageSquare className="w-5 h-5" />
         },
         {
-          title: 'Secure Your Payments',
-          description: 'Use our secure payment system. Never accept cash payments or wire transfers outside the platform.',
+          title: t.safetyGuidelines.securePayments,
+          description: t.safetyGuidelines.securePaymentsDesc,
           icon: <CreditCard className="w-5 h-5" />
         }
       ]
@@ -81,34 +84,34 @@ const SafetyGuidelines: React.FC = () => {
 
   const safetyTips = [
     {
-      title: 'Always Verify',
-      description: 'Check verification badges and read reviews before any transaction.',
+      title: t.safetyGuidelines.alwaysVerify,
+      description: t.safetyGuidelines.alwaysVerifyDesc,
       icon: <Shield className="w-8 h-8 text-primary-orange" />
     },
     {
-      title: 'Meet in Public',
-      description: 'Choose safe, public locations for vehicle exchanges.',
+      title: t.safetyGuidelines.meetInPublic,
+      description: t.safetyGuidelines.meetInPublicDesc,
       icon: <User className="w-8 h-8 text-primary-orange" />
     },
     {
-      title: 'Document Everything',
-      description: 'Take photos and keep records of all communications and transactions.',
+      title: t.safetyGuidelines.documentEverything,
+      description: t.safetyGuidelines.documentEverythingDesc,
       icon: <FileText className="w-8 h-8 text-primary-orange" />
     },
     {
-      title: 'Report Issues',
-      description: 'Immediately report any suspicious activity or safety concerns to our support team.',
+      title: t.safetyGuidelines.reportIssues,
+      description: t.safetyGuidelines.reportIssuesDesc,
       icon: <AlertTriangle className="w-8 h-8 text-primary-orange" />
     }
   ];
 
   const prohibited = [
-    'Renting vehicles without proper verification',
-    'Sharing personal contact information before booking confirmation',
-    'Accepting payments outside the platform',
-    'Renting to unverified users',
-    'Misrepresenting vehicle condition or features',
-    'Using the platform for illegal activities'
+    t.safetyGuidelines.prohibited1,
+    t.safetyGuidelines.prohibited2,
+    t.safetyGuidelines.prohibited3,
+    t.safetyGuidelines.prohibited4,
+    t.safetyGuidelines.prohibited5,
+    t.safetyGuidelines.prohibited6
   ];
 
   return (
@@ -122,9 +125,9 @@ const SafetyGuidelines: React.FC = () => {
                 <Shield className="w-10 h-10" />
               </div>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Safety Guidelines</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.safetyGuidelines.title}</h1>
             <p className="text-xl opacity-90">
-              Your safety and security are our top priorities. Follow these guidelines to ensure a safe experience for everyone.
+              {t.safetyGuidelines.subtitle}
             </p>
           </div>
         </div>
@@ -181,10 +184,10 @@ const SafetyGuidelines: React.FC = () => {
                 <div className="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
                   <AlertTriangle className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-red-700">Prohibited Activities</h2>
+                <h2 className="text-2xl font-bold text-red-700">{t.safetyGuidelines.prohibitedTitle}</h2>
               </div>
               <p className="text-gray-700 mb-4">
-                The following activities are strictly prohibited and may result in account suspension or legal action:
+                {t.safetyGuidelines.prohibitedDesc}
               </p>
               <ul className="space-y-2">
                 {prohibited.map((item, index) => (
@@ -203,10 +206,10 @@ const SafetyGuidelines: React.FC = () => {
               <div>
                 <h3 className="text-2xl font-bold mb-2 flex items-center gap-2">
                   <AlertTriangle className="w-6 h-6" />
-                  Emergency Support
+                  {t.safetyGuidelines.emergencySupport}
                 </h3>
                 <p className="opacity-90">
-                  If you encounter a safety issue or emergency, contact us immediately
+                  {t.safetyGuidelines.emergencyDesc}
                 </p>
               </div>
               <div className="flex gap-4">
@@ -215,14 +218,14 @@ const SafetyGuidelines: React.FC = () => {
                   className="btn bg-white text-primary-orange hover:bg-gray-100"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  Email Support
+                  {t.helpCenter.emailSupport}
                 </a>
                 <a
                   href="tel:+85523123456"
                   className="btn bg-white text-primary-orange hover:bg-gray-100"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  Emergency Line
+                  {t.safetyGuidelines.emergencyLine}
                 </a>
               </div>
             </div>
@@ -230,19 +233,19 @@ const SafetyGuidelines: React.FC = () => {
 
           {/* Additional Resources */}
           <div className="mt-12 card p-6">
-            <h3 className="text-xl font-bold mb-4 text-primary-blue">Additional Resources</h3>
+            <h3 className="text-xl font-bold mb-4 text-primary-blue">{t.safetyGuidelines.additionalResources}</h3>
             <div className="grid md:grid-cols-3 gap-4">
               <a href="/help-center" className="p-4 border border-gray-200 rounded-lg hover:border-primary-orange hover:shadow-md transition-all">
-                <h4 className="font-semibold text-primary-blue mb-2">Help Center</h4>
-                <p className="text-sm text-gray-600">Find answers to common questions</p>
+                <h4 className="font-semibold text-primary-blue mb-2">{t.safetyGuidelines.helpCenter}</h4>
+                <p className="text-sm text-gray-600">{t.safetyGuidelines.helpCenterDesc}</p>
               </a>
               <a href="/terms-of-service" className="p-4 border border-gray-200 rounded-lg hover:border-primary-orange hover:shadow-md transition-all">
-                <h4 className="font-semibold text-primary-blue mb-2">Terms of Service</h4>
-                <p className="text-sm text-gray-600">Read our terms and conditions</p>
+                <h4 className="font-semibold text-primary-blue mb-2">{t.safetyGuidelines.termsOfService}</h4>
+                <p className="text-sm text-gray-600">{t.safetyGuidelines.termsDesc}</p>
               </a>
               <a href="/privacy-policy" className="p-4 border border-gray-200 rounded-lg hover:border-primary-orange hover:shadow-md transition-all">
-                <h4 className="font-semibold text-primary-blue mb-2">Privacy Policy</h4>
-                <p className="text-sm text-gray-600">Learn how we protect your data</p>
+                <h4 className="font-semibold text-primary-blue mb-2">{t.safetyGuidelines.privacyPolicy}</h4>
+                <p className="text-sm text-gray-600">{t.safetyGuidelines.privacyDesc}</p>
               </a>
             </div>
           </div>

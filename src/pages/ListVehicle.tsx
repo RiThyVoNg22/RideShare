@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { useToast } from '../components/ToastProvider';
 import { vehiclesAPI, uploadAPI } from '../services/api';
 import { DollarSign, Shield, MapPin, CreditCard } from 'lucide-react';
 
 const ListVehicle: React.FC = () => {
+  const { t } = useLanguage();
   const { currentUser } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
@@ -354,8 +356,8 @@ const ListVehicle: React.FC = () => {
       {/* Page Header */}
       <section className="page-header bg-primary-blue text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">List Your Vehicle</h1>
-          <p className="text-xl opacity-90">Start earning money from your unused car, motorbike, or bicycle</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.listVehicle.title}</h1>
+          <p className="text-xl opacity-90">{t.listVehicle.subtitle}</p>
         </div>
       </section>
 
@@ -363,8 +365,8 @@ const ListVehicle: React.FC = () => {
       <section className="benefits-section py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="section-header text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">Why List Your Vehicle with Us?</h2>
-            <p className="text-lg text-gray-600">Join thousands of vehicle owners earning extra income safely</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">{t.listVehicle.whyList}</h2>
+            <p className="text-lg text-gray-600">{t.listVehicle.whyListDesc}</p>
           </div>
           
           <div className="benefits-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -372,9 +374,9 @@ const ListVehicle: React.FC = () => {
               <div className="benefit-icon w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <DollarSign className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Earn Extra Income</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.listVehicle.earnIncome}</h3>
               <p className="text-gray-600 leading-relaxed">
-                Turn your unused vehicle into a source of passive income. Average earnings: Cars $25-50/day, Motorbikes $6-12/day, Bicycles $3-8/day.
+                {t.listVehicle.earnIncomeDesc}
               </p>
             </div>
             
@@ -382,9 +384,9 @@ const ListVehicle: React.FC = () => {
               <div className="benefit-icon w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Verified Renters</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.listVehicle.verifiedRenters}</h3>
               <p className="text-gray-600 leading-relaxed">
-                All renters are ID-verified and rated by the community. You have full control over who rents your vehicle.
+                {t.listVehicle.verifiedRentersDesc}
               </p>
             </div>
             
@@ -392,9 +394,9 @@ const ListVehicle: React.FC = () => {
               <div className="benefit-icon w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <MapPin className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">GPS Tracking</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.listVehicle.gpsTracking}</h3>
               <p className="text-gray-600 leading-relaxed">
-                Track your vehicle's location in real-time during rentals for complete peace of mind.
+                {t.listVehicle.gpsTrackingDesc}
               </p>
             </div>
             
@@ -402,9 +404,9 @@ const ListVehicle: React.FC = () => {
               <div className="benefit-icon w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CreditCard className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-4 text-gray-900">Secure Payments</h3>
+              <h3 className="text-xl font-bold mb-4 text-gray-900">{t.listVehicle.securePayments}</h3>
               <p className="text-gray-600 leading-relaxed">
-                Automatic payment processing with deposit protection. Get paid instantly after each rental.
+                {t.listVehicle.securePaymentsDesc}
               </p>
             </div>
           </div>
@@ -417,12 +419,10 @@ const ListVehicle: React.FC = () => {
           <div className="form-container max-w-4xl mx-auto">
             <div className="form-header text-center mb-12">
               <h2 className="text-3xl font-bold text-primary-blue mb-4">
-                {isEditMode ? 'Edit Your Vehicle' : 'List Your Vehicle'}
+                {isEditMode ? t.listVehicle.editVehicle : t.listVehicle.listVehicle}
               </h2>
               <p className="text-lg text-gray-600">
-                {isEditMode 
-                  ? 'Update your vehicle information below' 
-                  : 'Complete the form below to start earning from your vehicle'}
+                {isEditMode ? t.listVehicle.editDesc : t.listVehicle.listDesc}
               </p>
             </div>
             
@@ -430,12 +430,12 @@ const ListVehicle: React.FC = () => {
               {/* Vehicle Information */}
               <div className="form-section mb-8 pb-8 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-primary-blue mb-6 flex items-center gap-2">
-                  <i className="fas fa-car text-primary-orange"></i> Vehicle Information
+                  <i className="fas fa-car text-primary-orange"></i> {t.listVehicle.vehicleInfo}
                 </h3>
                 
                 <div className="form-row grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Vehicle Title*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.vehicleTitle}</label>
                     <input
                       type="text"
                       name="name"
@@ -448,7 +448,7 @@ const ListVehicle: React.FC = () => {
                   </div>
                   
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Vehicle Type*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.vehicleType}</label>
                     <select
                       name="type"
                       value={formData.type}
@@ -456,17 +456,17 @@ const ListVehicle: React.FC = () => {
                       required
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
                     >
-                      <option value="">Select Type</option>
-                      <option value="car">Car</option>
-                      <option value="motorbike">Motorbike</option>
-                      <option value="bicycle">Bicycle</option>
+                      <option value="">{t.listVehicle.selectType}</option>
+                      <option value="car">{t.rent.car}</option>
+                      <option value="motorbike">{t.rent.motorbike}</option>
+                      <option value="bicycle">{t.rent.bicycle}</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="form-row grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Brand*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.brand}</label>
                     <input
                       type="text"
                       name="brand"
@@ -479,7 +479,7 @@ const ListVehicle: React.FC = () => {
                   </div>
                   
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Model*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.model}</label>
                     <input
                       type="text"
                       name="model"
@@ -494,7 +494,7 @@ const ListVehicle: React.FC = () => {
 
                 <div className="form-row grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Year*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.year}</label>
                     <select
                       name="year"
                       value={formData.year}
@@ -502,16 +502,16 @@ const ListVehicle: React.FC = () => {
                       required
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
                     >
-                      <option value="">Select Year</option>
+                      <option value="">{t.listVehicle.selectYear}</option>
                       {Array.from({ length: 15 }, (_, i) => 2024 - i).map(year => (
                         <option key={year} value={year}>{year}</option>
                       ))}
-                      <option value="older">Older</option>
+                      <option value="older">{t.listVehicle.older}</option>
                     </select>
                   </div>
                   
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Condition*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.condition}</label>
                     <select
                       name="condition"
                       value={formData.condition}
@@ -519,16 +519,16 @@ const ListVehicle: React.FC = () => {
                       required
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
                     >
-                      <option value="">Select Condition</option>
-                      <option value="excellent">Excellent</option>
-                      <option value="good">Good</option>
-                      <option value="fair">Fair</option>
+                      <option value="">{t.listVehicle.selectCondition}</option>
+                      <option value="excellent">{t.listVehicle.excellent}</option>
+                      <option value="good">{t.listVehicle.good}</option>
+                      <option value="fair">{t.listVehicle.fair}</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label className="block text-sm font-semibold mb-2">Description*</label>
+                  <label className="block text-sm font-semibold mb-2">{t.listVehicle.description}</label>
                   <textarea
                     name="description"
                     value={formData.description}
@@ -544,9 +544,9 @@ const ListVehicle: React.FC = () => {
               {/* Photos */}
               <div className="form-section mb-8 pb-8 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-primary-blue mb-6 flex items-center gap-2">
-                  <i className="fas fa-camera text-primary-orange"></i> Photos
+                  <i className="fas fa-camera text-primary-orange"></i> {t.listVehicle.photos}
                 </h3>
-                <p className="section-description text-gray-600 mb-4">Upload at least 3 high-quality photos of your vehicle</p>
+                <p className="section-description text-gray-600 mb-4">{t.listVehicle.photosDesc}</p>
                 
                 <div className="photo-upload-container">
                   <div 
@@ -616,7 +616,7 @@ const ListVehicle: React.FC = () => {
                 
                 <div className="form-row grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Daily Price (USD)*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.dailyPrice}</label>
                     <div className="input-with-icon relative">
                       <span className="input-icon absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-600 font-semibold">$</span>
                       <input
@@ -634,7 +634,7 @@ const ListVehicle: React.FC = () => {
                   </div>
                   
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Security Deposit (USD)*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.deposit}</label>
                     <div className="input-with-icon relative">
                       <span className="input-icon absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-600 font-semibold">$</span>
                       <input
@@ -653,7 +653,7 @@ const ListVehicle: React.FC = () => {
                 </div>
 
                 <div className="pricing-suggestions bg-gray-50 p-6 rounded-lg">
-                  <h4 className="font-semibold mb-4">Pricing Suggestions:</h4>
+                  <h4 className="font-semibold mb-4">{t.listVehicle.pricingSuggestions}</h4>
                   <div className="suggestion-grid grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     <div className="suggestion-item">
                       <strong>Cars:</strong> $25-50/day | Deposit: $150-300
@@ -671,12 +671,12 @@ const ListVehicle: React.FC = () => {
               {/* Location */}
               <div className="form-section mb-8 pb-8 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-primary-blue mb-6 flex items-center gap-2">
-                  <i className="fas fa-map-marker-alt text-primary-orange"></i> Location
+                  <i className="fas fa-map-marker-alt text-primary-orange"></i> {t.listVehicle.location}
                 </h3>
                 
                 <div className="form-row grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">City*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.city}</label>
                     <select
                       name="city"
                       value={formData.city}
@@ -684,7 +684,7 @@ const ListVehicle: React.FC = () => {
                       required
                       className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
                     >
-                      <option value="">Select City</option>
+                      <option value="">{t.listVehicle.selectCity}</option>
                       <option value="phnom-penh">Phnom Penh</option>
                       <option value="siem-reap">Siem Reap</option>
                       <option value="sihanoukville">Sihanoukville</option>
@@ -695,7 +695,7 @@ const ListVehicle: React.FC = () => {
                   </div>
                   
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">District/Area*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.district}</label>
                     <input
                       type="text"
                       name="district"
@@ -709,7 +709,7 @@ const ListVehicle: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="block text-sm font-semibold mb-2">Pickup Location*</label>
+                  <label className="block text-sm font-semibold mb-2">{t.listVehicle.pickupLocation}</label>
                   <textarea
                     name="address"
                     value={formData.address}
@@ -725,11 +725,11 @@ const ListVehicle: React.FC = () => {
               {/* Availability */}
               <div className="form-section mb-8 pb-8 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-primary-blue mb-6 flex items-center gap-2">
-                  <i className="fas fa-calendar text-primary-orange"></i> Availability
+                  <i className="fas fa-calendar text-primary-orange"></i> {t.listVehicle.availability}
                 </h3>
                 
                 <div className="form-group mb-4">
-                  <label className="block text-sm font-semibold mb-2">Available Days*</label>
+                  <label className="block text-sm font-semibold mb-2">{t.listVehicle.availableDays}</label>
                   <div className="checkbox-group grid grid-cols-2 md:grid-cols-4 gap-3">
                     {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map(day => (
                       <label key={day} className="flex items-center gap-2 cursor-pointer">
@@ -749,7 +749,7 @@ const ListVehicle: React.FC = () => {
 
                 <div className="form-row grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Available From*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.availableFrom}</label>
                     <input
                       type="time"
                       name="availableFrom"
@@ -761,7 +761,7 @@ const ListVehicle: React.FC = () => {
                   </div>
                   
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Available Until*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.availableUntil}</label>
                     <input
                       type="time"
                       name="availableTo"
@@ -777,12 +777,12 @@ const ListVehicle: React.FC = () => {
               {/* Contact Information */}
               <div className="form-section mb-8 pb-8 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-primary-blue mb-6 flex items-center gap-2">
-                  <i className="fas fa-phone text-primary-orange"></i> Contact Information
+                  <i className="fas fa-phone text-primary-orange"></i> {t.listVehicle.contactInfo}
                 </h3>
                 
                 <div className="form-row grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Your Name*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.ownerName}</label>
                     <input
                       type="text"
                       name="ownerName"
@@ -795,7 +795,7 @@ const ListVehicle: React.FC = () => {
                   </div>
                   
                   <div className="form-group">
-                    <label className="block text-sm font-semibold mb-2">Phone Number*</label>
+                    <label className="block text-sm font-semibold mb-2">{t.listVehicle.contactPhone}</label>
                     <input
                       type="tel"
                       name="contactNumber"
@@ -809,7 +809,7 @@ const ListVehicle: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="block text-sm font-semibold mb-2">Email Address*</label>
+                  <label className="block text-sm font-semibold mb-2">{t.listVehicle.contactEmail}</label>
                   <input
                     type="email"
                     name="contactEmail"
@@ -825,13 +825,13 @@ const ListVehicle: React.FC = () => {
               {/* Features */}
               <div className="form-section mb-8 pb-8 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-primary-blue mb-6 flex items-center gap-2">
-                  <i className="fas fa-list text-primary-orange"></i> Features & Amenities
+                  <i className="fas fa-list text-primary-orange"></i> {t.listVehicle.features}
                 </h3>
                 
                 <div className="features-grid">
                   {formData.type === 'car' && (
                     <div className="feature-category mb-6">
-                      <h4 className="font-semibold mb-4">Car Features</h4>
+                      <h4 className="font-semibold mb-4">{t.rent.car} {t.listVehicle.features}</h4>
                       <div className="checkbox-grid grid grid-cols-2 md:grid-cols-3 gap-3">
                         {carFeatures.map(feature => (
                           <label key={feature} className="flex items-center gap-2 cursor-pointer">
@@ -852,7 +852,7 @@ const ListVehicle: React.FC = () => {
                   
                   {formData.type === 'motorbike' && (
                     <div className="feature-category mb-6">
-                      <h4 className="font-semibold mb-4">Motorbike Features</h4>
+                      <h4 className="font-semibold mb-4">{t.rent.motorbike} {t.listVehicle.features}</h4>
                       <div className="checkbox-grid grid grid-cols-2 md:grid-cols-3 gap-3">
                         {motorbikeFeatures.map(feature => (
                           <label key={feature} className="flex items-center gap-2 cursor-pointer">
@@ -873,7 +873,7 @@ const ListVehicle: React.FC = () => {
                   
                   {formData.type === 'bicycle' && (
                     <div className="feature-category mb-6">
-                      <h4 className="font-semibold mb-4">Bicycle Features</h4>
+                      <h4 className="font-semibold mb-4">{t.rent.bicycle} {t.listVehicle.features}</h4>
                       <div className="checkbox-grid grid grid-cols-2 md:grid-cols-3 gap-3">
                         {bicycleFeatures.map(feature => (
                           <label key={feature} className="flex items-center gap-2 cursor-pointer">
@@ -957,9 +957,9 @@ const ListVehicle: React.FC = () => {
                   className="btn btn-primary btn-large px-8 py-4 text-lg font-semibold"
                 >
                   <i className={`fas ${isEditMode ? 'fa-save' : 'fa-plus-circle'} mr-2`}></i>
-                  {loading ? (isEditMode ? 'Updating...' : 'Submitting...') : (isEditMode ? 'Update Vehicle' : 'List My Vehicle')}
+                  {loading ? (isEditMode ? t.listVehicle.updating : t.listVehicle.submitting) : (isEditMode ? t.listVehicle.update : t.listVehicle.submit)}
                 </button>
-                <p className="submit-note text-gray-600 mt-4">Your listing will be reviewed and approved within 24 hours</p>
+                <p className="submit-note text-gray-600 mt-4">{t.listVehicle.listingReview}</p>
               </div>
             </form>
           </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 import { vehiclesAPI } from '../services/api';
 import { normalizeImageUrl } from '../utils/imageUtils';
 import { Heart, MapPin } from 'lucide-react';
@@ -23,6 +24,7 @@ interface Vehicle {
 }
 
 const Rent: React.FC = () => {
+  const { t } = useLanguage();
   const [searchParams] = useSearchParams();
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
@@ -105,7 +107,7 @@ const Rent: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-primary-orange border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading vehicles...</p>
+          <p className="text-gray-600">{t.rent.loadingVehicles}</p>
         </div>
       </div>
     );
@@ -116,8 +118,8 @@ const Rent: React.FC = () => {
       {/* Page Header */}
       <section className="page-header bg-primary-blue text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Find Your Perfect Ride</h1>
-          <p className="text-xl opacity-90">Browse available vehicles in Cambodia or search for something specific</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.rent.findPerfectRide}</h1>
+          <p className="text-xl opacity-90">{t.rent.browseAvailable}</p>
         </div>
       </section>
 
@@ -128,13 +130,13 @@ const Rent: React.FC = () => {
           <div className="search-filters bg-gray-100 p-8 rounded-2xl shadow-md mb-12">
             <div className="filter-row flex flex-wrap gap-4 items-end">
               <div className="filter-group flex-1 min-w-[150px]">
-                <label className="block text-sm font-semibold mb-2 text-gray-700">Location</label>
+                <label className="block text-sm font-semibold mb-2 text-gray-700">{t.rent.location}</label>
                 <select
                   value={filters.location}
                   onChange={(e) => setFilters({ ...filters, location: e.target.value })}
                   className="filter-select w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none bg-white"
                 >
-                  <option value="">All Locations</option>
+                  <option value="">{t.rent.allLocations}</option>
                   <option value="phnom-penh">Phnom Penh</option>
                   <option value="siem-reap">Siem Reap</option>
                   <option value="sihanoukville">Sihanoukville</option>
@@ -144,27 +146,27 @@ const Rent: React.FC = () => {
               </div>
 
               <div className="filter-group flex-1 min-w-[150px]">
-                <label className="block text-sm font-semibold mb-2 text-gray-700">Vehicle Type</label>
+                <label className="block text-sm font-semibold mb-2 text-gray-700">{t.rent.vehicleType}</label>
                 <select
                   value={filters.type}
                   onChange={(e) => setFilters({ ...filters, type: e.target.value })}
                   className="filter-select w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none bg-white"
                 >
-                  <option value="">All Types</option>
-                  <option value="car">Car</option>
-                  <option value="motorbike">Motorbike</option>
-                  <option value="bicycle">Bicycle</option>
+                  <option value="">{t.rent.allTypes}</option>
+                  <option value="car">{t.rent.car}</option>
+                  <option value="motorbike">{t.rent.motorbike}</option>
+                  <option value="bicycle">{t.rent.bicycle}</option>
                 </select>
               </div>
 
               <div className="filter-group flex-1 min-w-[150px]">
-                <label className="block text-sm font-semibold mb-2 text-gray-700">Max Price per Day</label>
+                <label className="block text-sm font-semibold mb-2 text-gray-700">{t.rent.maxPricePerDay}</label>
                 <select
                   value={filters.priceRange}
                   onChange={(e) => setFilters({ ...filters, priceRange: e.target.value })}
                   className="filter-select w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none bg-white"
                 >
-                  <option value="">Any Price</option>
+                  <option value="">{t.rent.anyPrice}</option>
                   <option value="0-10">$0 - $10</option>
                   <option value="10-25">$10 - $25</option>
                   <option value="25-50">$25 - $50</option>
@@ -173,7 +175,7 @@ const Rent: React.FC = () => {
               </div>
 
               <div className="filter-group flex-1 min-w-[150px]">
-                <label className="block text-sm font-semibold mb-2 text-gray-700">Availability</label>
+                <label className="block text-sm font-semibold mb-2 text-gray-700">{t.rent.availability}</label>
                 <input
                   type="date"
                   value={filters.availability}
@@ -188,7 +190,7 @@ const Rent: React.FC = () => {
                   onClick={loadVehicles}
                   className="search-filter-btn btn btn-primary px-8 py-3 whitespace-nowrap"
                 >
-                  <i className="fas fa-search mr-2"></i> Search
+                  <i className="fas fa-search mr-2"></i> {t.rent.search}
                 </button>
               </div>
             </div>
@@ -201,9 +203,9 @@ const Rent: React.FC = () => {
                 <div className="no-results text-center py-20">
                   <div className="no-results-content">
                     <i className="fas fa-search text-6xl text-gray-300 mb-4"></i>
-                    <h3 className="text-2xl font-bold text-gray-700 mb-2">No vehicles found</h3>
+                    <h3 className="text-2xl font-bold text-gray-700 mb-2">{t.rent.noVehiclesFound}</h3>
                     <p className="text-gray-600 mb-6">
-                      Try adjusting your search filters or browse all available vehicles.
+                      {t.rent.noVehiclesDesc}
                     </p>
                     <button
                       onClick={() => {
@@ -212,7 +214,7 @@ const Rent: React.FC = () => {
                       }}
                       className="clear-filters-btn btn btn-primary"
                     >
-                      Clear Filters
+                      {t.rent.clearFilters}
                     </button>
                   </div>
                 </div>
@@ -232,7 +234,7 @@ const Rent: React.FC = () => {
                     <div className={`vehicle-badge absolute top-4 left-4 px-3 py-1 rounded-full text-sm font-semibold ${
                       vehicle.available ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
                     }`}>
-                      {vehicle.available ? 'Available' : 'Rented'}
+                      {vehicle.available ? t.common.available : t.common.unavailable}
                     </div>
                     <button className="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors">
                       <Heart className="w-5 h-5 text-gray-600" />
@@ -266,16 +268,16 @@ const Rent: React.FC = () => {
                         {generateStars(vehicle.rating || 0)}
                       </div>
                       <span className="text-sm text-gray-600">
-                        {(vehicle.rating || 0).toFixed(1)} ({vehicle.reviewCount || 0} reviews)
+                        {(vehicle.rating || 0).toFixed(1)} ({vehicle.reviewCount || 0} {t.rent.reviews})
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <div>
                         <div className="text-2xl font-bold text-primary-orange">
-                          ${vehicle.pricePerDay}/day
+                          ${vehicle.pricePerDay}/{t.rent.perDay}
                         </div>
                         <div className="text-sm text-gray-600">
-                          Deposit: ${vehicle.depositAmount || 0}
+                          {t.rent.deposit}: ${vehicle.depositAmount || 0}
                         </div>
                       </div>
                       <Link
@@ -284,7 +286,7 @@ const Rent: React.FC = () => {
                           !vehicle.available ? 'opacity-50 cursor-not-allowed' : ''
                         }`}
                       >
-                        {vehicle.available ? 'Rent Now' : 'Currently Rented'}
+                        {vehicle.available ? t.rent.rentNow : t.rent.currentlyRented}
                       </Link>
                     </div>
                   </div>

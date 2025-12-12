@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { useToast } from '../components/ToastProvider';
 import { Eye, EyeOff, Mail, Lock, User, Phone, Shield, Info, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 
@@ -12,6 +13,7 @@ const Auth: React.FC = () => {
   const [error, setError] = useState('');
   
   const { login, register } = useAuth();
+  const { language, t } = useLanguage();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -93,17 +95,21 @@ const Auth: React.FC = () => {
         // Check password strength
         const strength = checkPasswordStrength(formData.password);
         if (strength.strength < 3) {
-          setError('Password is too weak. Please use a stronger password that meets all requirements.');
+          setError(language === 'en' 
+            ? 'Password is too weak. Please use a stronger password that meets all requirements.'
+            : 'ពាក្យសម្ងាត់ខ្សោយពេក។ សូមប្រើពាក្យសម្ងាត់ដែលខ្លាំងជាងនេះ ដែលបំពេញតម្រូវការទាំងអស់។');
           setLoading(false);
           return;
         }
         if (formData.password !== formData.confirmPassword) {
-          setError('Passwords do not match');
+          setError(t.auth.passwordsNotMatch);
           setLoading(false);
           return;
         }
         if (!formData.agreeTerms) {
-          setError('Please agree to the Terms of Service');
+          setError(language === 'en'
+            ? 'Please agree to the Terms of Service'
+            : 'សូមយល់ព្រមជាមួយលក្ខខណ្ឌសេវា');
           setLoading(false);
           return;
         }
@@ -143,7 +149,7 @@ const Auth: React.FC = () => {
                   : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
               }`}
             >
-              Log In
+              {t.auth.login}
               {isLogin && (
                 <span className="absolute bottom-0 left-0 right-0 h-1 bg-white opacity-30"></span>
               )}
@@ -156,7 +162,7 @@ const Auth: React.FC = () => {
                   : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
               }`}
             >
-              Sign Up
+              {t.auth.signUp}
               {!isLogin && (
                 <span className="absolute bottom-0 left-0 right-0 h-1 bg-white opacity-30"></span>
               )}
@@ -176,12 +182,10 @@ const Auth: React.FC = () => {
                   )}
                 </div>
                 <h2 className="text-3xl font-bold mb-2 text-white">
-                  {isLogin ? 'Welcome Back!' : 'Join RideShare Local'}
+                  {isLogin ? t.auth.welcomeBack : t.auth.joinRideShare}
                 </h2>
                 <p className="text-blue-100">
-                  {isLogin
-                    ? 'Log in to your RideShare Local account'
-                    : 'Create your account to start renting or listing vehicles'}
+                  {isLogin ? t.auth.loginSubtitle : t.auth.signUpSubtitle}
                 </p>
               </div>
             </div>
@@ -201,7 +205,7 @@ const Auth: React.FC = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        First Name
+                        {t.auth.firstName}
                       </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -212,13 +216,13 @@ const Auth: React.FC = () => {
                           onChange={handleChange}
                           required={!isLogin}
                           className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none transition-all"
-                          placeholder="First name"
+                          placeholder={t.auth.firstName}
                         />
                       </div>
                     </div>
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Last Name
+                        {t.auth.lastName}
                       </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -229,7 +233,7 @@ const Auth: React.FC = () => {
                           onChange={handleChange}
                           required={!isLogin}
                           className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none transition-all"
-                          placeholder="Last name"
+                          placeholder={t.auth.lastName}
                         />
                       </div>
                     </div>
@@ -238,7 +242,7 @@ const Auth: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Email Address
+                    {t.auth.email}
                   </label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -249,7 +253,7 @@ const Auth: React.FC = () => {
                       onChange={handleChange}
                       required
                       className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none transition-all"
-                      placeholder="Enter your email"
+                      placeholder={t.auth.email}
                     />
                   </div>
                 </div>
@@ -257,7 +261,7 @@ const Auth: React.FC = () => {
                 {!isLogin && (
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Phone Number
+                      {t.auth.phone}
                     </label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -276,7 +280,7 @@ const Auth: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Password
+                    {t.auth.password}
                   </label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -326,14 +330,14 @@ const Auth: React.FC = () => {
                             ? 'text-yellow-600'
                             : 'text-red-600'
                         }`}>
-                          Password Strength: {passwordStrength?.label || 'Very Weak'}
+                          {t.auth.passwordStrength}: {passwordStrength?.label || t.auth.veryWeak}
                         </span>
                         <span className="text-gray-500">{passwordStrength?.strength || 0}/5</span>
                       </div>
                       
                       {/* Requirements Checklist */}
                       <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                        <p className="text-xs font-semibold text-gray-700 mb-2">Password Requirements:</p>
+                        <p className="text-xs font-semibold text-gray-700 mb-2">{t.auth.passwordRequirements}:</p>
                         <div className="space-y-1.5">
                           <div className="flex items-center gap-2 text-xs">
                             {passwordStrength?.checks.length ? (
@@ -342,7 +346,7 @@ const Auth: React.FC = () => {
                               <XCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
                             )}
                             <span className={passwordStrength?.checks.length ? 'text-green-700' : 'text-gray-500'}>
-                              At least 8 characters
+                              {t.auth.atLeast8Chars}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-xs">
@@ -352,7 +356,7 @@ const Auth: React.FC = () => {
                               <XCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
                             )}
                             <span className={passwordStrength?.checks.lowercase ? 'text-green-700' : 'text-gray-500'}>
-                              One lowercase letter
+                              {t.auth.oneLowercase}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-xs">
@@ -362,7 +366,7 @@ const Auth: React.FC = () => {
                               <XCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
                             )}
                             <span className={passwordStrength?.checks.uppercase ? 'text-green-700' : 'text-gray-500'}>
-                              One uppercase letter
+                              {t.auth.oneUppercase}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-xs">
@@ -372,7 +376,7 @@ const Auth: React.FC = () => {
                               <XCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
                             )}
                             <span className={passwordStrength?.checks.number ? 'text-green-700' : 'text-gray-500'}>
-                              One number
+                              {t.auth.oneNumber}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-xs">
@@ -382,7 +386,7 @@ const Auth: React.FC = () => {
                               <XCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
                             )}
                             <span className={passwordStrength?.checks.special ? 'text-green-700' : 'text-gray-500'}>
-                              One special character (!@#$%^&*)
+                              {t.auth.oneSpecial}
                             </span>
                           </div>
                         </div>
@@ -395,7 +399,7 @@ const Auth: React.FC = () => {
                   <>
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Confirm Password
+                        {t.auth.confirmPassword}
                       </label>
                       <div className="relative">
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -412,7 +416,7 @@ const Auth: React.FC = () => {
                                 : 'border-red-300 focus:border-red-500 focus:ring-red-500/20'
                               : 'border-gray-200 focus:border-primary-orange focus:ring-primary-orange/20'
                           }`}
-                          placeholder="Confirm your password"
+                          placeholder={t.auth.confirmPassword}
                         />
                         <button
                           type="button"
@@ -429,12 +433,12 @@ const Auth: React.FC = () => {
                           {formData.password === formData.confirmPassword ? (
                             <>
                               <CheckCircle className="w-4 h-4 text-green-500" />
-                              <span className="text-green-600 font-medium">Passwords match</span>
+                              <span className="text-green-600 font-medium">{t.auth.passwordsMatch}</span>
                             </>
                           ) : (
                             <>
                               <XCircle className="w-4 h-4 text-red-500" />
-                              <span className="text-red-600 font-medium">Passwords do not match</span>
+                              <span className="text-red-600 font-medium">{t.auth.passwordsNotMatch}</span>
                             </>
                           )}
                         </div>
@@ -443,7 +447,7 @@ const Auth: React.FC = () => {
 
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        I want to
+                        {t.auth.accountType}
                       </label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
@@ -454,9 +458,9 @@ const Auth: React.FC = () => {
                           required={!isLogin}
                           className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none transition-all appearance-none bg-white"
                         >
-                          <option value="rent">Rent vehicles</option>
-                          <option value="list">List my vehicles</option>
-                          <option value="both">Both rent and list vehicles</option>
+                          <option value="rent">{t.auth.rentVehicles}</option>
+                          <option value="list">{t.auth.listVehicles}</option>
+                          <option value="both">{t.auth.both}</option>
                         </select>
                       </div>
                     </div>
@@ -471,13 +475,13 @@ const Auth: React.FC = () => {
                         className="mt-0.5 w-5 h-5 text-primary-orange border-gray-300 rounded focus:ring-primary-orange focus:ring-2"
                       />
                       <label className="text-sm text-gray-700 leading-relaxed">
-                        I agree to the{' '}
+                        {t.auth.agreeTerms}{' '}
                         <Link to="/terms-of-service" className="text-primary-orange hover:underline font-medium">
-                          Terms of Service
+                          {t.auth.termsOfService}
                         </Link>{' '}
-                        and{' '}
+                        {t.auth.and}{' '}
                         <Link to="/privacy-policy" className="text-primary-orange hover:underline font-medium">
-                          Privacy Policy
+                          {t.auth.privacyPolicy}
                         </Link>
                       </label>
                     </div>
@@ -492,10 +496,10 @@ const Auth: React.FC = () => {
                   {loading ? (
                     <span className="flex items-center justify-center gap-2">
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      Processing...
+                      {t.auth.processing}
                     </span>
                   ) : (
-                    isLogin ? 'Log In' : 'Create Account'
+                    isLogin ? t.auth.login : t.auth.createAccount
                   )}
                 </button>
               </form>
@@ -504,22 +508,22 @@ const Auth: React.FC = () => {
                 <p className="text-center text-sm text-gray-600">
                   {isLogin ? (
                     <>
-                      Don't have an account?{' '}
+                      {t.auth.dontHaveAccount}{' '}
                       <button
                         onClick={() => setIsLogin(false)}
                         className="text-primary-orange hover:text-orange-600 font-semibold transition-colors"
                       >
-                        Sign up here
+                        {t.auth.signUpHere}
                       </button>
                     </>
                   ) : (
                     <>
-                      Already have an account?{' '}
+                      {t.auth.alreadyHaveAccount}{' '}
                       <button
                         onClick={() => setIsLogin(true)}
                         className="text-primary-orange hover:text-orange-600 font-semibold transition-colors"
                       >
-                        Log in here
+                        {t.auth.loginHere}
                       </button>
                     </>
                   )}
@@ -539,10 +543,10 @@ const Auth: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-blue-900 mb-1 flex items-center gap-2">
-                    ID Verification Required
+                    {t.auth.idVerificationRequired}
                   </h4>
                   <p className="text-sm text-blue-700 leading-relaxed">
-                    After registration, you'll need to verify your identity with a government-issued ID to ensure platform security and unlock all features.
+                    {t.auth.idVerificationText}
                   </p>
                 </div>
               </div>

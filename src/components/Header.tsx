@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Menu, X, Shield, DollarSign } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { Menu, X, Shield, DollarSign, Globe } from 'lucide-react';
 import { verificationAPI, adminAPI } from '../services/api';
 
 const Header: React.FC = () => {
   const { currentUser, logout } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [pendingVerifications, setPendingVerifications] = useState(0);
+  const [showLangMenu, setShowLangMenu] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'km' : 'en');
+    setShowLangMenu(false);
+  };
 
   useEffect(() => {
     const loadPendingCount = async () => {
@@ -62,7 +70,7 @@ const Header: React.FC = () => {
                   isActive('/') ? 'bg-white/10' : 'hover:bg-white/5'
                 }`}
               >
-                Home
+                {t.nav.home}
               </Link>
             </li>
             <li>
@@ -72,7 +80,7 @@ const Header: React.FC = () => {
                   isActive('/how-it-works') ? 'bg-white/10' : 'hover:bg-white/5'
                 }`}
               >
-                How It Works
+                {t.nav.howItWorks}
               </Link>
             </li>
             <li>
@@ -82,7 +90,7 @@ const Header: React.FC = () => {
                   isActive('/rent') ? 'bg-white/10' : 'hover:bg-white/5'
                 }`}
               >
-                Rent
+                {t.nav.rent}
               </Link>
             </li>
             <li>
@@ -92,13 +100,57 @@ const Header: React.FC = () => {
                   isActive('/list-vehicle') ? 'bg-white/10' : 'hover:bg-white/5'
                 }`}
               >
-                List Your Vehicle
+                {t.nav.listVehicle}
               </Link>
             </li>
           </ul>
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Language Toggle */}
+            <div className="relative">
+              <button
+                onClick={() => setShowLangMenu(!showLangMenu)}
+                className="flex items-center gap-2 px-3 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors border border-white/20"
+                title="Change Language"
+              >
+                <Globe className="w-4 h-4" />
+                <span className="text-sm font-medium">{language === 'en' ? 'EN' : 'ខ្មែរ'}</span>
+              </button>
+              {showLangMenu && (
+                <>
+                  <div 
+                    className="fixed inset-0 z-10" 
+                    onClick={() => setShowLangMenu(false)}
+                  ></div>
+                  <div className="absolute right-0 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-20 min-w-[120px]">
+                    <button
+                      onClick={() => {
+                        setLanguage('en');
+                        setShowLangMenu(false);
+                      }}
+                      className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-50 transition-colors ${
+                        language === 'en' ? 'bg-primary-orange/10 text-primary-orange font-semibold' : 'text-gray-700'
+                      }`}
+                    >
+                      English
+                    </button>
+                    <button
+                      onClick={() => {
+                        setLanguage('km');
+                        setShowLangMenu(false);
+                      }}
+                      className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-50 transition-colors ${
+                        language === 'km' ? 'bg-primary-orange/10 text-primary-orange font-semibold' : 'text-gray-700'
+                      }`}
+                    >
+                      ភាសាខ្មែរ
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+
             {currentUser ? (
               <div className="flex items-center gap-3">
                 {(currentUser.isAdmin || currentUser.role === 'admin') && (
@@ -113,7 +165,7 @@ const Header: React.FC = () => {
                       title="ID Verifications"
                     >
                       <Shield className="w-4 h-4" />
-                      <span className="text-sm font-medium">Verifications</span>
+                      <span className="text-sm font-medium">{t.nav.verifications}</span>
                       {pendingVerifications > 0 && (
                         <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-primary-blue">
                           {pendingVerifications > 9 ? '9+' : pendingVerifications}
@@ -131,7 +183,7 @@ const Header: React.FC = () => {
                       title="Commissions Dashboard"
                     >
                       <DollarSign className="w-4 h-4" />
-                      <span className="text-sm font-medium">Commissions</span>
+                      <span className="text-sm font-medium">{t.nav.commissions}</span>
                     </Link>
                   </div>
                 )}
@@ -145,12 +197,12 @@ const Header: React.FC = () => {
                   onClick={handleLogout} 
                   className="btn btn-outline px-4 py-2 border-white/30 hover:bg-white/10"
                 >
-                  Logout
+                  {t.nav.logout}
                 </button>
               </div>
             ) : (
               <Link to="/auth" className="btn btn-secondary">
-                Sign Up / Log In
+                {t.nav.signUp}
               </Link>
             )}
           </div>
@@ -177,7 +229,7 @@ const Header: React.FC = () => {
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Home
+                  {t.nav.home}
                 </Link>
               </li>
               <li>
@@ -188,7 +240,7 @@ const Header: React.FC = () => {
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  How It Works
+                  {t.nav.howItWorks}
                 </Link>
               </li>
               <li>
@@ -199,7 +251,7 @@ const Header: React.FC = () => {
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Rent
+                  {t.nav.rent}
                 </Link>
               </li>
               <li>
@@ -210,8 +262,41 @@ const Header: React.FC = () => {
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  List Your Vehicle
+                  {t.nav.listVehicle}
                 </Link>
+              </li>
+              <li className="pt-2 pb-2 border-t border-white/20">
+                <div className="flex items-center justify-between px-4 py-2">
+                  <span className="text-sm text-white/80">{language === 'en' ? 'Language' : 'ភាសា'}</span>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        setLanguage('en');
+                        setMobileMenuOpen(false);
+                      }}
+                      className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                        language === 'en' 
+                          ? 'bg-primary-orange text-white' 
+                          : 'bg-white/10 text-white/70 hover:bg-white/20'
+                      }`}
+                    >
+                      EN
+                    </button>
+                    <button
+                      onClick={() => {
+                        setLanguage('km');
+                        setMobileMenuOpen(false);
+                      }}
+                      className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                        language === 'km' 
+                          ? 'bg-primary-orange text-white' 
+                          : 'bg-white/10 text-white/70 hover:bg-white/20'
+                      }`}
+                    >
+                      ខ្មែរ
+                    </button>
+                  </div>
+                </div>
               </li>
               {(currentUser?.isAdmin || currentUser?.role === 'admin') && (
                 <>
@@ -228,7 +313,7 @@ const Header: React.FC = () => {
                     >
                       <span className="flex items-center gap-2">
                         <Shield className="w-4 h-4" />
-                        Verifications
+                        {t.nav.verifications}
                       </span>
                       {pendingVerifications > 0 && (
                         <span className="bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5 min-w-[20px] text-center">
@@ -246,7 +331,7 @@ const Header: React.FC = () => {
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       <DollarSign className="w-4 h-4" />
-                      Commissions
+                      {t.nav.commissions}
                     </Link>
                   </li>
                 </>
@@ -269,7 +354,7 @@ const Header: React.FC = () => {
                       }} 
                       className="btn btn-outline w-full"
                     >
-                      Logout
+                      {t.nav.logout}
                     </button>
                   </div>
                 ) : (

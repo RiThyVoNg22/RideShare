@@ -3,9 +3,10 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { vehiclesAPI, bookingsAPI } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
-import { normalizeImageUrls } from '../utils/imageUtils';
+import { normalizeImageUrl, normalizeImageUrls } from '../utils/imageUtils';
 import Modal from '../components/Modal';
 import { MapPin, Heart, CheckCircle } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface Vehicle {
   _id: string;
@@ -30,6 +31,7 @@ const ProductDetail: React.FC = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { showToast } = useToast();
+  const { t } = useLanguage();
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -91,7 +93,7 @@ const ProductDetail: React.FC = () => {
     }
 
     if (!pickupDate || !returnDate) {
-      showToast('Please select pickup and return dates', 'warning');
+      showToast(t.productDetail.selectDates, 'warning');
       return;
     }
 
@@ -188,7 +190,7 @@ const ProductDetail: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-primary-orange border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading vehicle details...</p>
+          <p className="text-gray-600">{t.productDetail.loading}</p>
         </div>
       </div>
     );
@@ -198,9 +200,9 @@ const ProductDetail: React.FC = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-700 mb-4">Vehicle Not Found</h2>
+          <h2 className="text-2xl font-bold text-gray-700 mb-4">{t.productDetail.notFound}</h2>
           <Link to="/rent" className="btn btn-primary">
-            Browse Vehicles
+            {t.productDetail.browseVehicles}
           </Link>
         </div>
       </div>
@@ -218,24 +220,24 @@ const ProductDetail: React.FC = () => {
       <Modal
         isOpen={showBookingModal}
         onClose={handleCloseBookingModal}
-        title="Booking Confirmed!"
+        title={t.productDetail.bookingConfirmed}
       >
         <div className="text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-10 h-10 text-green-600" />
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Your booking has been confirmed!</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">{t.productDetail.bookingConfirmedDesc}</h3>
           <p className="text-gray-600 mb-4">
-            Booking ID: <span className="font-mono font-semibold text-primary-blue">{bookingId}</span>
+            {t.productDetail.bookingId} <span className="font-mono font-semibold text-primary-blue">{bookingId}</span>
           </p>
           <p className="text-sm text-gray-500 mb-6">
-            You will receive a confirmation email shortly. The vehicle owner will contact you to arrange pickup details.
+            {t.productDetail.confirmationEmail}
           </p>
           <button
             onClick={handleCloseBookingModal}
             className="btn btn-primary w-full"
           >
-            Continue Browsing
+            {t.productDetail.continueBrowsing}
           </button>
         </div>
       </Modal>
@@ -244,9 +246,9 @@ const ProductDetail: React.FC = () => {
         <div className="container mx-auto px-4">
         {/* Breadcrumb */}
         <nav className="text-sm text-gray-600 mb-6">
-          <Link to="/" className="hover:text-primary-orange">Home</Link>
+          <Link to="/" className="hover:text-primary-orange">{t.productDetail.home}</Link>
           <span className="mx-2">/</span>
-          <Link to="/rent" className="hover:text-primary-orange">Rent</Link>
+          <Link to="/rent" className="hover:text-primary-orange">{t.productDetail.rent}</Link>
           <span className="mx-2">/</span>
           <span className="text-gray-900">{vehicle.name}</span>
         </nav>
@@ -295,7 +297,7 @@ const ProductDetail: React.FC = () => {
                     <div className="flex items-center gap-2">
                       {generateStars(vehicle.rating || 0)}
                       <span className="text-sm text-gray-600">
-                        {(vehicle.rating || 0).toFixed(1)} ({vehicle.reviewCount || 0} reviews)
+                        {(vehicle.rating || 0).toFixed(1)} ({vehicle.reviewCount || 0} {t.productDetail.reviews})
                       </span>
                     </div>
                   </div>
@@ -312,7 +314,7 @@ const ProductDetail: React.FC = () => {
 
               {vehicle.features && vehicle.features.length > 0 && (
                 <div className="mb-6">
-                  <h3 className="text-xl font-bold mb-4">Features</h3>
+                  <h3 className="text-xl font-bold mb-4">{t.productDetail.features}</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {vehicle.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center gap-2">
@@ -326,7 +328,7 @@ const ProductDetail: React.FC = () => {
 
               {vehicle.description && (
                 <div>
-                  <h3 className="text-xl font-bold mb-4">Description</h3>
+                  <h3 className="text-xl font-bold mb-4">{t.productDetail.description}</h3>
                   <p className="text-gray-600">{vehicle.description}</p>
                 </div>
               )}
@@ -338,14 +340,14 @@ const ProductDetail: React.FC = () => {
             <div className="card p-6 sticky top-24">
               <div className="mb-6">
                 <div className="text-3xl font-bold text-primary-orange mb-2">
-                  ${vehicle.pricePerDay}/day
+                  ${vehicle.pricePerDay}{t.productDetail.perDay}
                 </div>
-                <div className="text-gray-600">Deposit: ${vehicle.depositAmount || 0}</div>
+                <div className="text-gray-600">{t.productDetail.deposit} ${vehicle.depositAmount || 0}</div>
               </div>
 
               <div className="space-y-4 mb-6">
                 <div>
-                  <label className="block text-sm font-semibold mb-2">Pickup Date</label>
+                  <label className="block text-sm font-semibold mb-2">{t.productDetail.pickupDate}</label>
                   <input
                     type="date"
                     value={pickupDate}
@@ -362,7 +364,7 @@ const ProductDetail: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold mb-2">Return Date</label>
+                  <label className="block text-sm font-semibold mb-2">{t.productDetail.returnDate}</label>
                   <input
                     type="date"
                     value={returnDate}
@@ -375,18 +377,18 @@ const ProductDetail: React.FC = () => {
 
               <div className="border-t pt-4 mb-6">
                 <div className="flex justify-between mb-2">
-                  <span className="text-gray-600">${vehicle.pricePerDay} x {days} days</span>
+                  <span className="text-gray-600">${vehicle.pricePerDay} x {days} {t.productDetail.days}</span>
                   <span className="font-semibold">${subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-gray-600">Service Fee (5%)</span>
+                  <span className="text-gray-600">{t.productDetail.serviceFee}</span>
                   <span className="font-semibold">${serviceFee.toFixed(2)}</span>
                 </div>
                 <div className="text-xs text-gray-500 mb-2 italic">
-                  * Platform commission (10%) included in rental price
+                  {t.productDetail.commissionNote}
                 </div>
                 <div className="flex justify-between text-lg font-bold pt-4 border-t">
-                  <span>Total</span>
+                  <span>{t.productDetail.total}</span>
                   <span className="text-primary-orange">${total.toFixed(2)}</span>
                 </div>
               </div>
@@ -396,12 +398,12 @@ const ProductDetail: React.FC = () => {
                 disabled={!vehicle.available || booking}
                 className={`btn btn-primary w-full ${!vehicle.available ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                {booking ? 'Processing...' : vehicle.available ? 'Book Now' : 'Currently Rented'}
+                {booking ? t.productDetail.processing : vehicle.available ? t.productDetail.bookNow : t.productDetail.currentlyRented}
               </button>
 
               {vehicle.ownerName && (
                 <div className="mt-6 pt-6 border-t">
-                  <h4 className="font-semibold mb-2">Owner</h4>
+                  <h4 className="font-semibold mb-2">{t.productDetail.owner}</h4>
                   <p className="text-gray-600">{vehicle.ownerName}</p>
                 </div>
               )}

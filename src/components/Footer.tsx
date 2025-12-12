@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 import { 
   Car, 
   Mail, 
@@ -17,6 +18,8 @@ import {
 } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const { t } = useLanguage();
+  
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
       {/* Decorative background elements */}
@@ -39,7 +42,7 @@ const Footer: React.FC = () => {
               </h3>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed mb-6">
-              Connecting vehicle owners with renters across Cambodia for safe, transparent, and convenient transportation solutions.
+              {t.footer.description}
             </p>
             
             {/* Social Media Links */}
@@ -87,7 +90,7 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold mb-6 flex items-center gap-2">
               <ArrowRight className="w-5 h-5 text-primary-orange" />
-              Quick Links
+              {t.footer.quickLinks}
             </h4>
             <ul className="space-y-3">
               <li>
@@ -133,7 +136,7 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold mb-6 flex items-center gap-2">
               <Shield className="w-5 h-5 text-primary-orange" />
-              Support
+              {t.footer.support}
             </h4>
             <ul className="space-y-3">
               <li>
@@ -179,7 +182,7 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold mb-6 flex items-center gap-2">
               <Mail className="w-5 h-5 text-primary-orange" />
-              Contact Us
+              {t.footer.contactUs}
             </h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 group">
@@ -187,7 +190,7 @@ const Footer: React.FC = () => {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-gray-400 text-xs mb-1">Email</p>
+                  <p className="text-gray-400 text-xs mb-1">{t.footer.email}</p>
                   <a 
                     href="mailto:support@ridesharelocal.com" 
                     className="text-gray-300 hover:text-primary-orange transition-colors text-sm break-all"
@@ -201,7 +204,7 @@ const Footer: React.FC = () => {
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-gray-400 text-xs mb-1">Phone</p>
+                  <p className="text-gray-400 text-xs mb-1">{t.footer.phone}</p>
                   <a 
                     href="tel:+85523123456" 
                     className="text-gray-300 hover:text-primary-orange transition-colors text-sm"
@@ -215,7 +218,7 @@ const Footer: React.FC = () => {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-gray-400 text-xs mb-1">Location</p>
+                  <p className="text-gray-400 text-xs mb-1">{t.footer.location}</p>
                   <p className="text-gray-300 text-sm">
                     Phnom Penh, Cambodia
                   </p>
@@ -229,10 +232,10 @@ const Footer: React.FC = () => {
         <div className="border-t border-gray-700/50 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              &copy; 2025 RideShare Local. All rights reserved.
+              {t.footer.rights}
             </p>
             <div className="flex items-center gap-6 text-sm text-gray-400">
-              <span>Made with ❤️ in Cambodia</span>
+              <span>{t.footer.madeWith} ❤️ {t.footer.inCambodia}</span>
             </div>
           </div>
         </div>

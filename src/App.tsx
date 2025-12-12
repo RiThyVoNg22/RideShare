@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import { ToastProvider } from './components/ToastProvider';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -21,11 +22,12 @@ import PaymentCancel from './pages/PaymentCancel';
 
 function App() {
   return (
-    <AuthProvider>
-      <ToastProvider>
-        <Router>
-          <Layout>
-            <Routes>
+    <LanguageProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <Router>
+            <Layout>
+              <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/rent" element={<Rent />} />
@@ -42,11 +44,12 @@ function App() {
               <Route path="/admin/commissions" element={<AdminCommissions />} />
               <Route path="/payment/success" element={<PaymentSuccess />} />
               <Route path="/payment/cancel" element={<PaymentCancel />} />
-            </Routes>
-          </Layout>
-        </Router>
-      </ToastProvider>
-    </AuthProvider>
+              </Routes>
+            </Layout>
+          </Router>
+        </ToastProvider>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 
