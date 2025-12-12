@@ -1,14 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Shield, DollarSign } from 'lucide-react';
+import { verificationAPI, adminAPI } from '../services/api';
 
 const Header: React.FC = () => {
   const { currentUser, logout } = useAuth();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [pendingVerifications, setPendingVerifications] = useState(0);
 
   const isActive = (path: string) => location.pathname === path;
+
+  useEffect(() => {
+    const loadPendingCount = async () => {
+      if (currentUser && (currentUser.isAdmin || currentUser.role === 'admin')) {
+        try {
+          const response = await verificationAPI.getPendingVerifications();
+          if (response.success) {
+            setPendingVerifications(response.verifications?.length || 0);
+          }
+        } catch (error) {
+          // Silently fail - not critical
+        }
+      }
+    };
+    loadPendingCount();
+    // Refresh count every 30 seconds
+    const interval = setInterval(loadPendingCount, 30000);
+    return () => clearInterval(interval);
+  }, [currentUser]);
 
   const handleLogout = async () => {
     try {
@@ -77,28 +98,53 @@ const Header: React.FC = () => {
           </ul>
 
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
             {currentUser ? (
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 {(currentUser.isAdmin || currentUser.role === 'admin') && (
-                  <Link
-                    to="/admin/verifications"
-                    className={`px-4 py-2 rounded-lg transition-colors ${
-                      isActive('/admin/verifications') ? 'bg-white/20' : 'bg-white/10 hover:bg-white/15'
-                    }`}
-                    title="Admin Panel"
-                  >
-                    <i className="fas fa-shield-alt"></i> Admin
-                  </Link>
+                  <div className="flex items-center gap-2 bg-white/10 rounded-lg px-2 py-1 border border-white/20">
+                    <Link
+                      to="/admin/verifications"
+                      className={`relative flex items-center gap-2 px-3 py-2 rounded-md transition-all ${
+                        isActive('/admin/verifications') 
+                          ? 'bg-white/20 text-white' 
+                          : 'text-white/90 hover:bg-white/15 hover:text-white'
+                      }`}
+                      title="ID Verifications"
+                    >
+                      <Shield className="w-4 h-4" />
+                      <span className="text-sm font-medium">Verifications</span>
+                      {pendingVerifications > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-primary-blue">
+                          {pendingVerifications > 9 ? '9+' : pendingVerifications}
+                        </span>
+                      )}
+                    </Link>
+                    <div className="w-px h-6 bg-white/20"></div>
+                    <Link
+                      to="/admin/commissions"
+                      className={`flex items-center gap-2 px-3 py-2 rounded-md transition-all ${
+                        isActive('/admin/commissions') 
+                          ? 'bg-white/20 text-white' 
+                          : 'text-white/90 hover:bg-white/15 hover:text-white'
+                      }`}
+                      title="Commissions Dashboard"
+                    >
+                      <DollarSign className="w-4 h-4" />
+                      <span className="text-sm font-medium">Commissions</span>
+                    </Link>
+                  </div>
                 )}
                 <Link
                   to="/profile"
-                  className="btn btn-secondary flex items-center gap-2"
+                  className="btn btn-secondary flex items-center gap-2 px-4 py-2"
                 >
-                  <i className="fas fa-user-circle"></i>
                   {currentUser.firstName || currentUser.email?.split('@')[0]}
                 </Link>
-                <button onClick={handleLogout} className="btn btn-outline">
+                <button 
+                  onClick={handleLogout} 
+                  className="btn btn-outline px-4 py-2 border-white/30 hover:bg-white/10"
+                >
                   Logout
                 </button>
               </div>
@@ -168,17 +214,42 @@ const Header: React.FC = () => {
                 </Link>
               </li>
               {(currentUser?.isAdmin || currentUser?.role === 'admin') && (
-                <li>
-                  <Link 
-                    to="/admin/verifications" 
-                    className={`block px-4 py-2 rounded-lg ${
-                      isActive('/admin/verifications') ? 'bg-white/10' : 'hover:bg-white/5'
-                    }`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <i className="fas fa-shield-alt"></i> Admin Panel
-                  </Link>
-                </li>
+                <>
+                  <li className="pt-2 pb-2 border-t border-white/20">
+                    <p className="px-4 py-2 text-xs font-semibold text-white/60 uppercase tracking-wider">Admin</p>
+                  </li>
+                  <li>
+                    <Link 
+                      to="/admin/verifications" 
+                      className={`relative flex items-center justify-between px-4 py-2 rounded-lg ${
+                        isActive('/admin/verifications') ? 'bg-white/10' : 'hover:bg-white/5'
+                      }`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <span className="flex items-center gap-2">
+                        <Shield className="w-4 h-4" />
+                        Verifications
+                      </span>
+                      {pendingVerifications > 0 && (
+                        <span className="bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5 min-w-[20px] text-center">
+                          {pendingVerifications > 9 ? '9+' : pendingVerifications}
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      to="/admin/commissions" 
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
+                        isActive('/admin/commissions') ? 'bg-white/10' : 'hover:bg-white/5'
+                      }`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <DollarSign className="w-4 h-4" />
+                      Commissions
+                    </Link>
+                  </li>
+                </>
               )}
               <li className="pt-4 border-t border-white/20">
                 {currentUser ? (

@@ -14,6 +14,9 @@ const bookingSchema = new mongoose.Schema({
   dailyRate: { type: Number, required: true },
   subtotal: { type: Number, required: true },
   serviceFee: { type: Number, default: 0 },
+  commission: { type: Number, default: 0 }, // Platform commission
+  commissionRate: { type: Number, default: 0.10 }, // Commission percentage (10% default)
+  ownerEarnings: { type: Number, default: 0 }, // Amount owner receives after commission
   totalPrice: { type: Number, required: true },
   status: {
     type: String,

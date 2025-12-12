@@ -31,8 +31,13 @@ router.post('/', protect, async (req, res) => {
     const returnD = new Date(returnDate);
     const rentalDays = Math.ceil((returnD - pickup) / (1000 * 60 * 60 * 24)) || 1;
     const subtotal = vehicle.pricePerDay * rentalDays;
-    const serviceFee = subtotal * 0.05;
-    const total = subtotal + serviceFee;
+    
+    // Commission calculation (configurable via .env, default 10%)
+    const commissionRate = parseFloat(process.env.COMMISSION_RATE || '0.10'); // 10% default
+    const commission = subtotal * commissionRate;
+    const serviceFee = subtotal * 0.05; // Optional service fee (can be removed if you only want commission)
+    const ownerEarnings = subtotal - commission; // What the owner receives
+    const total = subtotal + serviceFee; // Total paid by renter
 
     // Create booking
     const booking = await Booking.create({
@@ -49,6 +54,9 @@ router.post('/', protect, async (req, res) => {
       dailyRate: vehicle.pricePerDay,
       subtotal,
       serviceFee,
+      commission,
+      commissionRate,
+      ownerEarnings,
       totalPrice: total,
       status: 'pending'
     });
@@ -93,8 +101,8 @@ router.get('/my-bookings', protect, async (req, res) => {
 router.get('/owner-requests', protect, async (req, res) => {
   try {
     const bookings = await Booking.find({ ownerId: req.user._id })
-      .populate('userId', 'firstName lastName email')
-      .populate('vehicleId', 'name images')
+      .populate('userId', 'firstName lastName email phone idVerified')
+      .populate('vehicleId', 'name images pricePerDay location')
       .sort({ createdAt: -1 });
 
     res.json({
@@ -140,6 +148,72 @@ router.get('/:id', protect, async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+});
+
+// Cancel booking (user can cancel their own booking)
+router.delete('/:id', protect, async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: 'Booking not found'
+      });
+    }
+
+    // Check if user owns this booking
+    if (booking.userId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized. You can only cancel your own bookings.'
+      });
+    }
+
+    // Prevent cancellation if booking is already completed or active
+    if (booking.status === 'completed') {
+      return res.status(400).json({
+        success: false,
+        message: 'Cannot cancel a completed booking'
+      });
+    }
+
+    if (booking.status === 'active') {
+      return res.status(400).json({
+        success: false,
+        message: 'Cannot cancel an active booking. Please contact support.'
+      });
+    }
+
+    // Update booking status to cancelled
+    booking.status = 'cancelled';
+    booking.updatedAt = new Date();
+    
+    // If payment was made, mark for refund
+    if (booking.paymentStatus === 'paid') {
+      booking.paymentStatus = 'refunded';
+    }
+    
+    await booking.save();
+
+    // Update vehicle availability - make it available again
+    const vehicle = await Vehicle.findById(booking.vehicleId);
+    if (vehicle) {
+      vehicle.available = true;
+      await vehicle.save();
+    }
+
+    res.json({
+      success: true,
+      message: 'Booking cancelled successfully',
+      booking
+    });
+  } catch (error) {
+    res.status(400).json({
       success: false,
       message: error.message
     });

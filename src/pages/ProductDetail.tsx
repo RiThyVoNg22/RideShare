@@ -72,14 +72,16 @@ const ProductDetail: React.FC = () => {
   };
 
   const calculateTotal = () => {
-    if (!vehicle || !pickupDate || !returnDate) return { days: 0, subtotal: 0, serviceFee: 0, total: 0 };
+    if (!vehicle || !pickupDate || !returnDate) return { days: 0, subtotal: 0, serviceFee: 0, commission: 0, total: 0 };
     const start = new Date(pickupDate);
     const end = new Date(returnDate);
     const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) || 1;
     const subtotal = vehicle.pricePerDay * days;
+    const commissionRate = 0.10; // 10% commission (matches backend default)
+    const commission = subtotal * commissionRate;
     const serviceFee = subtotal * 0.05;
     const total = subtotal + serviceFee;
-    return { days, subtotal, serviceFee, total };
+    return { days, subtotal, serviceFee, commission, total };
   };
 
   const handleBookNow = async () => {
@@ -95,6 +97,7 @@ const ProductDetail: React.FC = () => {
 
     try {
       setBooking(true);
+      // First create the booking
       const response = await bookingsAPI.create({
         vehicleId: vehicle!._id,
         pickupDate,
@@ -102,12 +105,58 @@ const ProductDetail: React.FC = () => {
       });
 
       if (response.success) {
-        setBookingId(response.booking._id);
-        setShowBookingModal(true);
+        const bookingId = response.booking._id;
+        setBookingId(bookingId);
+        
+        // Try to create Stripe checkout session
+        try {
+          const paymentResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/payments/create-checkout-session`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({ bookingId }),
+          });
+
+          const paymentData = await paymentResponse.json();
+
+          if (paymentData.success && paymentData.url) {
+            // Redirect to Stripe checkout if payment is configured
+            window.location.href = paymentData.url;
+            return;
+          } else if (paymentResponse.status === 503) {
+            // Payment not configured - allow booking without payment
+            console.log('Payment not configured, creating booking without payment');
+            setBookingId(bookingId);
+            setShowBookingModal(true);
+            showToast('Booking created successfully! Payment can be completed later.', 'success');
+            setBooking(false);
+            return;
+          } else {
+            throw new Error(paymentData.message || 'Failed to create payment session');
+          }
+        } catch (paymentError: any) {
+          // If payment fails (e.g., not configured), still allow booking
+          if (paymentError.message && paymentError.message.includes('not configured')) {
+            console.log('Payment not configured, allowing booking without payment');
+            setBookingId(bookingId);
+            setShowBookingModal(true);
+            showToast('Booking created successfully! Payment can be completed later.', 'success');
+            setBooking(false);
+            return;
+          }
+          
+          // For other errors, show warning but still create booking
+          console.error('Payment error:', paymentError);
+          setBookingId(bookingId);
+          setShowBookingModal(true);
+          showToast('Booking created! Payment processing is not available yet.', 'warning');
+          setBooking(false);
+        }
       }
     } catch (error: any) {
       showToast(error.message || 'Booking failed. Please try again.', 'error');
-    } finally {
       setBooking(false);
     }
   };
@@ -158,7 +207,7 @@ const ProductDetail: React.FC = () => {
     );
   }
 
-  const { days, subtotal, serviceFee, total } = calculateTotal();
+  const { days, subtotal, serviceFee, commission, total } = calculateTotal();
   const images = vehicle.images 
     ? normalizeImageUrls(vehicle.images) 
     : (vehicle.mainPhoto ? [normalizeImageUrl(vehicle.mainPhoto)] : ['/RideShare/imge/placeholder.png']);
@@ -332,6 +381,9 @@ const ProductDetail: React.FC = () => {
                 <div className="flex justify-between mb-2">
                   <span className="text-gray-600">Service Fee (5%)</span>
                   <span className="font-semibold">${serviceFee.toFixed(2)}</span>
+                </div>
+                <div className="text-xs text-gray-500 mb-2 italic">
+                  * Platform commission (10%) included in rental price
                 </div>
                 <div className="flex justify-between text-lg font-bold pt-4 border-t">
                   <span>Total</span>

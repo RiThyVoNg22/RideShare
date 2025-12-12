@@ -183,6 +183,12 @@ export const bookingsAPI = {
       body: JSON.stringify({ status }),
     });
   },
+
+  cancel: async (id: string) => {
+    return request(`/bookings/${id}`, {
+      method: 'DELETE',
+    });
+  },
 };
 
 // Chat API
@@ -274,6 +280,38 @@ export const uploadAPI = {
     if (!response.ok) {
       throw new Error(data.message || 'Upload failed');
     }
+    return data;
+  },
+};
+
+// Admin API
+export const adminAPI = {
+  getCommissions: async (params?: { startDate?: string; endDate?: string; status?: string }) => {
+    const token = getToken();
+    const queryParams = new URLSearchParams();
+    if (params?.startDate) queryParams.append('startDate', params.startDate);
+    if (params?.endDate) queryParams.append('endDate', params.endDate);
+    if (params?.status) queryParams.append('status', params.status);
+    
+    const response = await fetch(`${API_URL}/admin/commissions?${queryParams}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to fetch commissions');
+    return data;
+  },
+  
+  getCommissionStats: async (period: 'day' | 'week' | 'month' | 'year' = 'month') => {
+    const token = getToken();
+    const response = await fetch(`${API_URL}/admin/commissions/stats?period=${period}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to fetch commission stats');
     return data;
   },
 };

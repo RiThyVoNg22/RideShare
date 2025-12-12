@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, Phone, Shield, Info, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 
 const Auth: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -26,6 +26,50 @@ const Auth: React.FC = () => {
     agreeTerms: false,
   });
 
+  // Password strength checker
+  const checkPasswordStrength = (password: string) => {
+    if (!password) return { strength: 0, label: '', color: '', checks: {
+      length: false,
+      lowercase: false,
+      uppercase: false,
+      number: false,
+      special: false,
+    }};
+    
+    let strength = 0;
+    const checks = {
+      length: password.length >= 8,
+      lowercase: /[a-z]/.test(password),
+      uppercase: /[A-Z]/.test(password),
+      number: /[0-9]/.test(password),
+      special: /[^a-zA-Z0-9]/.test(password),
+    };
+
+    strength += checks.length ? 1 : 0;
+    strength += checks.lowercase ? 1 : 0;
+    strength += checks.uppercase ? 1 : 0;
+    strength += checks.number ? 1 : 0;
+    strength += checks.special ? 1 : 0;
+
+    const levels = [
+      { label: 'Very Weak', color: 'bg-red-500' },
+      { label: 'Weak', color: 'bg-orange-500' },
+      { label: 'Fair', color: 'bg-yellow-500' },
+      { label: 'Good', color: 'bg-blue-500' },
+      { label: 'Strong', color: 'bg-green-500' },
+      { label: 'Very Strong', color: 'bg-green-600' },
+    ];
+
+    return { 
+      strength, 
+      label: levels[Math.min(strength, 5)].label, 
+      color: levels[Math.min(strength, 5)].color,
+      checks 
+    };
+  };
+
+  const passwordStrength = !isLogin && formData.password ? checkPasswordStrength(formData.password) : null;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     if (type === 'checkbox') {
@@ -46,6 +90,13 @@ const Auth: React.FC = () => {
         await login(formData.email, formData.password);
         navigate('/');
       } else {
+        // Check password strength
+        const strength = checkPasswordStrength(formData.password);
+        if (strength.strength < 3) {
+          setError('Password is too weak. Please use a stronger password that meets all requirements.');
+          setLoading(false);
+          return;
+        }
         if (formData.password !== formData.confirmPassword) {
           setError('Passwords do not match');
           setLoading(false);
@@ -79,238 +130,424 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-md mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 py-12 px-4">
+      <div className="container mx-auto">
+        <div className="max-w-lg mx-auto">
           {/* Toggle Buttons */}
-          <div className="flex bg-white rounded-t-lg overflow-hidden shadow-md mb-4">
+          <div className="flex bg-white rounded-2xl overflow-hidden shadow-xl mb-6 border border-gray-100">
             <button
               onClick={() => setIsLogin(true)}
-              className={`flex-1 py-4 font-semibold transition-colors ${
+              className={`flex-1 py-4 font-semibold transition-all duration-300 relative ${
                 isLogin
-                  ? 'bg-primary-orange text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-gradient-to-r from-primary-orange to-orange-600 text-white shadow-lg'
+                  : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
               }`}
             >
               Log In
+              {isLogin && (
+                <span className="absolute bottom-0 left-0 right-0 h-1 bg-white opacity-30"></span>
+              )}
             </button>
             <button
               onClick={() => setIsLogin(false)}
-              className={`flex-1 py-4 font-semibold transition-colors ${
+              className={`flex-1 py-4 font-semibold transition-all duration-300 relative ${
                 !isLogin
-                  ? 'bg-primary-orange text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-gradient-to-r from-primary-orange to-orange-600 text-white shadow-lg'
+                  : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
               }`}
             >
               Sign Up
+              {!isLogin && (
+                <span className="absolute bottom-0 left-0 right-0 h-1 bg-white opacity-30"></span>
+              )}
             </button>
           </div>
 
           {/* Form Card */}
-          <div className="card p-8">
-            <h2 className="text-3xl font-bold mb-2 text-center text-primary-blue">
-              {isLogin ? 'Welcome Back!' : 'Join RideShare Local'}
-            </h2>
-            <p className="text-gray-600 text-center mb-6">
-              {isLogin
-                ? 'Log in to your RideShare Local account'
-                : 'Create your account to start renting or listing vehicles'}
-            </p>
-
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-                {error}
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            {/* Header Section */}
+            <div className="bg-gradient-to-r from-primary-blue to-blue-600 px-8 pt-8 pb-6">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+                  {isLogin ? (
+                    <Lock className="w-8 h-8 text-white" />
+                  ) : (
+                    <User className="w-8 h-8 text-white" />
+                  )}
+                </div>
+                <h2 className="text-3xl font-bold mb-2 text-white">
+                  {isLogin ? 'Welcome Back!' : 'Join RideShare Local'}
+                </h2>
+                <p className="text-blue-100">
+                  {isLogin
+                    ? 'Log in to your RideShare Local account'
+                    : 'Create your account to start renting or listing vehicles'}
+                </p>
               </div>
-            )}
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {!isLogin && (
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold mb-2">First Name</label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      required={!isLogin}
-                      className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-orange focus:outline-none"
-                      placeholder="First name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold mb-2">Last Name</label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      required={!isLogin}
-                      className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-orange focus:outline-none"
-                      placeholder="Last name"
-                    />
-                  </div>
+            {/* Form Content */}
+            <div className="p-8">
+
+              {error && (
+                <div className="bg-red-50 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-r-lg mb-6 flex items-center gap-2">
+                  <Info className="w-5 h-5 flex-shrink-0" />
+                  <span>{error}</span>
                 </div>
               )}
 
-              <div>
-                <label className="block text-sm font-semibold mb-2">Email Address</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-orange focus:outline-none"
-                  placeholder="Enter your email"
-                />
-              </div>
-
-              {!isLogin && (
-                <div>
-                  <label className="block text-sm font-semibold mb-2">Phone Number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required={!isLogin}
-                    className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-orange focus:outline-none"
-                    placeholder="+855 XX XXX XXX"
-                  />
-                </div>
-              )}
-
-              <div>
-                <label className="block text-sm font-semibold mb-2">Password</label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-orange focus:outline-none pr-10"
-                    placeholder={isLogin ? 'Enter your password' : 'Create a password'}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                  >
-                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </button>
-                </div>
-              </div>
-
-              {!isLogin && (
-                <>
-                  <div>
-                    <label className="block text-sm font-semibold mb-2">Confirm Password</label>
-                    <div className="relative">
-                      <input
-                        type={showConfirmPassword ? 'text' : 'password'}
-                        name="confirmPassword"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        required={!isLogin}
-                        className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-orange focus:outline-none pr-10"
-                        placeholder="Confirm your password"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                      >
-                        {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                      </button>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                {!isLogin && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        First Name
+                      </label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <input
+                          type="text"
+                          name="firstName"
+                          value={formData.firstName}
+                          onChange={handleChange}
+                          required={!isLogin}
+                          className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none transition-all"
+                          placeholder="First name"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Last Name
+                      </label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <input
+                          type="text"
+                          name="lastName"
+                          value={formData.lastName}
+                          onChange={handleChange}
+                          required={!isLogin}
+                          className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none transition-all"
+                          placeholder="Last name"
+                        />
+                      </div>
                     </div>
                   </div>
+                )}
 
-                  <div>
-                    <label className="block text-sm font-semibold mb-2">I want to</label>
-                    <select
-                      name="accountType"
-                      value={formData.accountType}
-                      onChange={handleChange}
-                      required={!isLogin}
-                      className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-orange focus:outline-none"
-                    >
-                      <option value="rent">Rent vehicles</option>
-                      <option value="list">List my vehicles</option>
-                      <option value="both">Both rent and list vehicles</option>
-                    </select>
-                  </div>
-
-                  <div className="flex items-start gap-2">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
-                      type="checkbox"
-                      name="agreeTerms"
-                      checked={formData.agreeTerms}
+                      type="email"
+                      name="email"
+                      value={formData.email}
                       onChange={handleChange}
-                      required={!isLogin}
-                      className="mt-1"
+                      required
+                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none transition-all"
+                      placeholder="Enter your email"
                     />
-                    <label className="text-sm text-gray-600">
-                      I agree to the{' '}
-                      <a href="/terms-of-service" className="text-primary-orange hover:underline">
-                        Terms of Service
-                      </a>{' '}
-                      and{' '}
-                      <a href="/privacy-policy" className="text-primary-orange hover:underline">
-                        Privacy Policy
-                      </a>
-                    </label>
                   </div>
-                </>
-              )}
+                </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn btn-primary w-full"
-              >
-                {loading ? 'Processing...' : isLogin ? 'Log In' : 'Create Account'}
-              </button>
-            </form>
+                {!isLogin && (
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Phone Number
+                    </label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required={!isLogin}
+                        className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none transition-all"
+                        placeholder="+855 XX XXX XXX"
+                      />
+                    </div>
+                  </div>
+                )}
 
-            <p className="mt-6 text-center text-sm text-gray-600">
-              {isLogin ? (
-                <>
-                  Don't have an account?{' '}
-                  <button
-                    onClick={() => setIsLogin(false)}
-                    className="text-primary-orange hover:underline font-semibold"
-                  >
-                    Sign up here
-                  </button>
-                </>
-              ) : (
-                <>
-                  Already have an account?{' '}
-                  <button
-                    onClick={() => setIsLogin(true)}
-                    className="text-primary-orange hover:underline font-semibold"
-                  >
-                    Log in here
-                  </button>
-                </>
-              )}
-            </p>
-          </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                      className={`w-full pl-10 pr-12 py-3 border-2 rounded-xl focus:ring-2 focus:outline-none transition-all ${
+                        !isLogin && formData.password
+                          ? passwordStrength && passwordStrength.strength >= 3
+                            ? 'border-green-300 focus:border-green-500 focus:ring-green-500/20'
+                            : passwordStrength && passwordStrength.strength >= 2
+                            ? 'border-yellow-300 focus:border-yellow-500 focus:ring-yellow-500/20'
+                            : 'border-red-300 focus:border-red-500 focus:ring-red-500/20'
+                          : 'border-gray-200 focus:border-primary-orange focus:ring-primary-orange/20'
+                      }`}
+                      placeholder={isLogin ? 'Enter your password' : 'Create a password'}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                    >
+                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                  
+                  {/* Password Strength Indicator */}
+                  {!isLogin && formData.password && (
+                    <div className="mt-3 space-y-2">
+                      {/* Strength Bar */}
+                      <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                        <div
+                          className={`h-full transition-all duration-300 ${passwordStrength?.color || 'bg-gray-300'}`}
+                          style={{ width: `${((passwordStrength?.strength || 0) / 5) * 100}%` }}
+                        />
+                      </div>
+                      
+                      {/* Strength Label */}
+                      <div className="flex items-center justify-between text-xs">
+                        <span className={`font-semibold ${
+                          passwordStrength && passwordStrength.strength >= 3
+                            ? 'text-green-600'
+                            : passwordStrength && passwordStrength.strength >= 2
+                            ? 'text-yellow-600'
+                            : 'text-red-600'
+                        }`}>
+                          Password Strength: {passwordStrength?.label || 'Very Weak'}
+                        </span>
+                        <span className="text-gray-500">{passwordStrength?.strength || 0}/5</span>
+                      </div>
+                      
+                      {/* Requirements Checklist */}
+                      <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                        <p className="text-xs font-semibold text-gray-700 mb-2">Password Requirements:</p>
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-2 text-xs">
+                            {passwordStrength?.checks.length ? (
+                              <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                            ) : (
+                              <XCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            )}
+                            <span className={passwordStrength?.checks.length ? 'text-green-700' : 'text-gray-500'}>
+                              At least 8 characters
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs">
+                            {passwordStrength?.checks.lowercase ? (
+                              <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                            ) : (
+                              <XCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            )}
+                            <span className={passwordStrength?.checks.lowercase ? 'text-green-700' : 'text-gray-500'}>
+                              One lowercase letter
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs">
+                            {passwordStrength?.checks.uppercase ? (
+                              <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                            ) : (
+                              <XCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            )}
+                            <span className={passwordStrength?.checks.uppercase ? 'text-green-700' : 'text-gray-500'}>
+                              One uppercase letter
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs">
+                            {passwordStrength?.checks.number ? (
+                              <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                            ) : (
+                              <XCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            )}
+                            <span className={passwordStrength?.checks.number ? 'text-green-700' : 'text-gray-500'}>
+                              One number
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs">
+                            {passwordStrength?.checks.special ? (
+                              <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                            ) : (
+                              <XCircle className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            )}
+                            <span className={passwordStrength?.checks.special ? 'text-green-700' : 'text-gray-500'}>
+                              One special character (!@#$%^&*)
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
 
-          {/* Verification Notice */}
-          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div className="flex gap-3">
-              <i className="fas fa-info-circle text-blue-600 mt-1"></i>
-              <div>
-                <h4 className="font-semibold text-blue-900 mb-1">ID Verification Required</h4>
-                <p className="text-sm text-blue-700">
-                  After registration, you'll need to verify your identity with a government-issued ID to ensure platform security.
+                {!isLogin && (
+                  <>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Confirm Password
+                      </label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <input
+                          type={showConfirmPassword ? 'text' : 'password'}
+                          name="confirmPassword"
+                          value={formData.confirmPassword}
+                          onChange={handleChange}
+                          required={!isLogin}
+                          className={`w-full pl-10 pr-12 py-3 border-2 rounded-xl focus:ring-2 focus:outline-none transition-all ${
+                            formData.confirmPassword
+                              ? formData.password === formData.confirmPassword
+                                ? 'border-green-300 focus:border-green-500 focus:ring-green-500/20'
+                                : 'border-red-300 focus:border-red-500 focus:ring-red-500/20'
+                              : 'border-gray-200 focus:border-primary-orange focus:ring-primary-orange/20'
+                          }`}
+                          placeholder="Confirm your password"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+                        >
+                          {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                      </div>
+                      
+                      {/* Password Match Indicator */}
+                      {formData.confirmPassword && (
+                        <div className="mt-2 flex items-center gap-2 text-xs">
+                          {formData.password === formData.confirmPassword ? (
+                            <>
+                              <CheckCircle className="w-4 h-4 text-green-500" />
+                              <span className="text-green-600 font-medium">Passwords match</span>
+                            </>
+                          ) : (
+                            <>
+                              <XCircle className="w-4 h-4 text-red-500" />
+                              <span className="text-red-600 font-medium">Passwords do not match</span>
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        I want to
+                      </label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+                        <select
+                          name="accountType"
+                          value={formData.accountType}
+                          onChange={handleChange}
+                          required={!isLogin}
+                          className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none transition-all appearance-none bg-white"
+                        >
+                          <option value="rent">Rent vehicles</option>
+                          <option value="list">List my vehicles</option>
+                          <option value="both">Both rent and list vehicles</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                      <input
+                        type="checkbox"
+                        name="agreeTerms"
+                        checked={formData.agreeTerms}
+                        onChange={handleChange}
+                        required={!isLogin}
+                        className="mt-0.5 w-5 h-5 text-primary-orange border-gray-300 rounded focus:ring-primary-orange focus:ring-2"
+                      />
+                      <label className="text-sm text-gray-700 leading-relaxed">
+                        I agree to the{' '}
+                        <Link to="/terms-of-service" className="text-primary-orange hover:underline font-medium">
+                          Terms of Service
+                        </Link>{' '}
+                        and{' '}
+                        <Link to="/privacy-policy" className="text-primary-orange hover:underline font-medium">
+                          Privacy Policy
+                        </Link>
+                      </label>
+                    </div>
+                  </>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-primary-orange to-orange-600 text-white py-3 px-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Processing...
+                    </span>
+                  ) : (
+                    isLogin ? 'Log In' : 'Create Account'
+                  )}
+                </button>
+              </form>
+
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <p className="text-center text-sm text-gray-600">
+                  {isLogin ? (
+                    <>
+                      Don't have an account?{' '}
+                      <button
+                        onClick={() => setIsLogin(false)}
+                        className="text-primary-orange hover:text-orange-600 font-semibold transition-colors"
+                      >
+                        Sign up here
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      Already have an account?{' '}
+                      <button
+                        onClick={() => setIsLogin(true)}
+                        className="text-primary-orange hover:text-orange-600 font-semibold transition-colors"
+                      >
+                        Log in here
+                      </button>
+                    </>
+                  )}
                 </p>
               </div>
             </div>
           </div>
+
+          {/* Verification Notice */}
+          {!isLogin && (
+            <div className="mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-r-xl p-5 shadow-md">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-white" />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-blue-900 mb-1 flex items-center gap-2">
+                    ID Verification Required
+                  </h4>
+                  <p className="text-sm text-blue-700 leading-relaxed">
+                    After registration, you'll need to verify your identity with a government-issued ID to ensure platform security and unlock all features.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

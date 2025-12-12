@@ -53,9 +53,10 @@ const Profile: React.FC = () => {
   const { currentUser, logout, updateProfile } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'info' | 'bookings' | 'messages' | 'vehicles' | 'settings'>('info');
+  const [activeTab, setActiveTab] = useState<'info' | 'bookings' | 'messages' | 'vehicles' | 'settings' | 'requests'>('info');
   const [loading, setLoading] = useState(false);
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [ownerRequests, setOwnerRequests] = useState<any[]>([]);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [chats, setChats] = useState<Chat[]>([]);
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
@@ -97,6 +98,8 @@ const Profile: React.FC = () => {
   useEffect(() => {
     if (activeTab === 'bookings') {
       loadBookings();
+    } else if (activeTab === 'requests') {
+      loadOwnerRequests();
     } else if (activeTab === 'vehicles') {
       loadVehicles();
     } else if (activeTab === 'messages') {
@@ -143,6 +146,19 @@ const Profile: React.FC = () => {
     } catch (error) {
       console.error('Error loading bookings:', error);
       showToast('Failed to load bookings', 'error');
+    }
+  };
+
+  const loadOwnerRequests = async () => {
+    try {
+      setLoading(true);
+      const response = await bookingsAPI.getOwnerRequests();
+      setOwnerRequests(response.bookings || []);
+    } catch (error) {
+      console.error('Error loading owner requests:', error);
+      showToast('Failed to load booking requests', 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -455,6 +471,19 @@ const Profile: React.FC = () => {
               <Calendar className="w-4 h-4 inline mr-2" />
               Bookings
             </button>
+            {(currentUser.accountType === 'owner' || currentUser.accountType === 'both') && (
+              <button
+                onClick={() => setActiveTab('requests')}
+                className={`px-6 py-4 font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                  activeTab === 'requests'
+                    ? 'border-primary-orange text-primary-orange'
+                    : 'border-transparent text-gray-600 hover:text-primary-blue'
+                }`}
+              >
+                <User className="w-4 h-4 inline mr-2" />
+                Booking Requests
+              </button>
+            )}
             <button
               onClick={() => setActiveTab('messages')}
               className={`px-6 py-4 font-semibold border-b-2 transition-colors whitespace-nowrap ${
@@ -732,7 +761,7 @@ const Profile: React.FC = () => {
                           <div className="text-2xl font-bold text-primary-orange mb-1">
                             ${booking.totalPrice.toFixed(2)}
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 flex-wrap">
                             {(() => {
                               // Normalize vehicleId - handle both string and object
                               const vehicleId = typeof booking.vehicleId === 'string' 
@@ -758,6 +787,30 @@ const Profile: React.FC = () => {
                                 </button>
                               );
                             })()}
+                            {(booking.status === 'pending' || booking.status === 'confirmed') && (
+                              <button
+                                onClick={async () => {
+                                  if (!window.confirm('Are you sure you want to cancel this booking? This action cannot be undone.')) {
+                                    return;
+                                  }
+                                  try {
+                                    setLoading(true);
+                                    await bookingsAPI.cancel(booking._id);
+                                    showToast('Booking cancelled successfully', 'success');
+                                    loadBookings(); // Refresh bookings list
+                                  } catch (error: any) {
+                                    showToast(error.message || 'Failed to cancel booking', 'error');
+                                  } finally {
+                                    setLoading(false);
+                                  }
+                                }}
+                                className="btn btn-outline text-sm text-red-600 hover:bg-red-50 border-red-300"
+                                disabled={loading}
+                              >
+                                <XCircle className="w-4 h-4" />
+                                Cancel
+                              </button>
+                            )}
                             <button
                               onClick={async () => {
                                 try {
@@ -792,6 +845,222 @@ const Profile: React.FC = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Owner Requests Tab - Shows bookings for owner's vehicles */}
+          {activeTab === 'requests' && (
+            <div>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold">Booking Requests</h2>
+                <p className="text-gray-600">Requests from renters for your vehicles</p>
+              </div>
+
+              {loading ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 border-4 border-primary-orange border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                  <p className="text-gray-600">Loading booking requests...</p>
+                </div>
+              ) : ownerRequests.length === 0 ? (
+                <div className="card p-12 text-center">
+                  <User className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-gray-700 mb-2">No booking requests yet</h3>
+                  <p className="text-gray-600 mb-6">When renters book your vehicles, their requests will appear here.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {ownerRequests.map((request: any) => {
+                    const renter = request.userId || {};
+                    const vehicle = request.vehicleId || {};
+                    
+                    return (
+                      <div key={request._id} className="card p-6 hover:shadow-lg transition-all border-l-4 border-primary-blue">
+                        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                          <div className="flex-1">
+                            {/* Renter Information */}
+                            <div className="mb-4 pb-4 border-b">
+                              <h3 className="text-lg font-bold text-primary-blue mb-3">Renter Information</h3>
+                              <div className="grid md:grid-cols-2 gap-4">
+                                <div>
+                                  <label className="block text-sm font-semibold text-gray-600 mb-1">Name</label>
+                                  <p className="text-lg font-medium">
+                                    {renter.firstName || ''} {renter.lastName || ''}
+                                    {renter.idVerified && (
+                                      <CheckCircle className="w-4 h-4 inline ml-2 text-green-500" title="ID Verified" />
+                                    )}
+                                  </p>
+                                </div>
+                                <div>
+                                  <label className="block text-sm font-semibold text-gray-600 mb-1">Email</label>
+                                  <p className="text-lg">
+                                    <a href={`mailto:${renter.email || request.userEmail}`} className="text-primary-blue hover:underline">
+                                      {renter.email || request.userEmail}
+                                    </a>
+                                  </p>
+                                </div>
+                                <div>
+                                  <label className="block text-sm font-semibold text-gray-600 mb-1">Phone</label>
+                                  <p className="text-lg">
+                                    {renter.phone ? (
+                                      <a href={`tel:${renter.phone}`} className="text-primary-blue hover:underline">
+                                        {renter.phone}
+                                      </a>
+                                    ) : (
+                                      <span className="text-gray-400">Not provided</span>
+                                    )}
+                                  </p>
+                                </div>
+                                <div>
+                                  <label className="block text-sm font-semibold text-gray-600 mb-1">ID Verification</label>
+                                  <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
+                                    renter.idVerified 
+                                      ? 'bg-green-100 text-green-700' 
+                                      : 'bg-yellow-100 text-yellow-700'
+                                  }`}>
+                                    {renter.idVerified ? (
+                                      <>
+                                        <CheckCircle className="w-4 h-4" />
+                                        Verified
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Clock className="w-4 h-4" />
+                                        Not Verified
+                                      </>
+                                    )}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Booking Details */}
+                            <div>
+                              <h4 className="text-lg font-bold mb-2">{request.vehicleName || vehicle.name}</h4>
+                              <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600 mb-3">
+                                <div className="flex items-center gap-2">
+                                  <Calendar className="w-4 h-4" />
+                                  <span>Pickup: {formatDate(request.pickupDate)}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Calendar className="w-4 h-4" />
+                                  <span>Return: {formatDate(request.returnDate)}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Clock className="w-4 h-4" />
+                                  <span>{request.rentalDays} days</span>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-4 mb-3">
+                                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                  request.status === 'completed' ? 'bg-green-100 text-green-700' :
+                                  request.status === 'confirmed' ? 'bg-blue-100 text-blue-700' :
+                                  request.status === 'active' ? 'bg-purple-100 text-purple-700' :
+                                  request.status === 'cancelled' ? 'bg-red-100 text-red-700' :
+                                  'bg-yellow-100 text-yellow-700'
+                                }`}>
+                                  {request.status?.toUpperCase() || 'PENDING'}
+                                </span>
+                                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                  request.paymentStatus === 'paid' ? 'bg-green-100 text-green-700' :
+                                  request.paymentStatus === 'refunded' ? 'bg-orange-100 text-orange-700' :
+                                  'bg-gray-100 text-gray-700'
+                                }`}>
+                                  Payment: {request.paymentStatus?.toUpperCase() || 'PENDING'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="text-right md:text-left md:min-w-[200px]">
+                            <div className="text-2xl font-bold text-primary-orange mb-2">
+                              ${request.totalPrice?.toFixed(2) || '0.00'}
+                            </div>
+                            {request.ownerEarnings && (
+                              <div className="text-sm text-gray-600 mb-4">
+                                You earn: <span className="font-semibold text-green-600">${request.ownerEarnings.toFixed(2)}</span>
+                              </div>
+                            )}
+                            <div className="flex flex-col gap-2">
+                              {(request.status === 'pending' || request.status === 'confirmed') && (
+                                <>
+                                  <button
+                                    onClick={async () => {
+                                      try {
+                                        setLoading(true);
+                                        await bookingsAPI.updateStatus(request._id, 'confirmed');
+                                        showToast('Booking confirmed successfully', 'success');
+                                        loadOwnerRequests();
+                                      } catch (error: any) {
+                                        showToast(error.message || 'Failed to confirm booking', 'error');
+                                      } finally {
+                                        setLoading(false);
+                                      }
+                                    }}
+                                    className="btn btn-primary text-sm w-full"
+                                    disabled={loading || request.status === 'confirmed'}
+                                  >
+                                    <CheckCircle className="w-4 h-4" />
+                                    {request.status === 'confirmed' ? 'Confirmed' : 'Confirm'}
+                                  </button>
+                                  <button
+                                    onClick={async () => {
+                                      if (!window.confirm('Are you sure you want to reject this booking request?')) {
+                                        return;
+                                      }
+                                      try {
+                                        setLoading(true);
+                                        await bookingsAPI.updateStatus(request._id, 'cancelled');
+                                        showToast('Booking rejected', 'success');
+                                        loadOwnerRequests();
+                                      } catch (error: any) {
+                                        showToast(error.message || 'Failed to reject booking', 'error');
+                                      } finally {
+                                        setLoading(false);
+                                      }
+                                    }}
+                                    className="btn btn-outline text-sm text-red-600 border-red-300 hover:bg-red-50 w-full"
+                                    disabled={loading}
+                                  >
+                                    <XCircle className="w-4 h-4" />
+                                    Reject
+                                  </button>
+                                </>
+                              )}
+                              <button
+                                onClick={async () => {
+                                  try {
+                                    setLoading(true);
+                                    const response = await chatAPI.getChatByBooking(request._id);
+                                    if (response.success && response.chat) {
+                                      const chatWithBooking = {
+                                        ...response.chat,
+                                        bookingId: request._id
+                                      };
+                                      handleOpenChat(chatWithBooking);
+                                    } else {
+                                      showToast('Failed to create chat', 'error');
+                                    }
+                                  } catch (error: any) {
+                                    console.error('Error opening chat:', error);
+                                    showToast(error.message || 'Failed to open chat', 'error');
+                                  } finally {
+                                    setLoading(false);
+                                  }
+                                }}
+                                className="btn btn-outline text-sm w-full"
+                                disabled={loading}
+                              >
+                                <MessageSquare className="w-4 h-4" />
+                                Message Renter
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>

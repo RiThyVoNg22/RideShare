@@ -13,6 +13,8 @@ import chatRoutes from './routes/chat.js';
 import userRoutes from './routes/users.js';
 import uploadRoutes from './routes/upload.js';
 import verificationRoutes from './routes/verification.js';
+import adminRoutes from './routes/admin.js';
+import paymentRoutes from './routes/payments.js';
 
 dotenv.config();
 
@@ -85,6 +87,8 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/verification', verificationRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Debug: Log all registered routes
 console.log('✅ Routes registered:');

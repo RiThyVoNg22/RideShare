@@ -15,6 +15,9 @@ import HelpCenter from './pages/HelpCenter';
 import SafetyGuidelines from './pages/SafetyGuidelines';
 import Profile from './pages/Profile';
 import AdminVerifications from './pages/AdminVerifications';
+import AdminCommissions from './pages/AdminCommissions';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentCancel from './pages/PaymentCancel';
 
 function App() {
   return (
@@ -36,6 +39,9 @@ function App() {
               <Route path="/safety-guidelines" element={<SafetyGuidelines />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin/verifications" element={<AdminVerifications />} />
+              <Route path="/admin/commissions" element={<AdminCommissions />} />
+              <Route path="/payment/success" element={<PaymentSuccess />} />
+              <Route path="/payment/cancel" element={<PaymentCancel />} />
             </Routes>
           </Layout>
         </Router>
