@@ -15,6 +15,7 @@ import uploadRoutes from './routes/upload.js';
 import verificationRoutes from './routes/verification.js';
 import adminRoutes from './routes/admin.js';
 import paymentRoutes from './routes/payments.js';
+import notificationRoutes from './routes/notifications.js';
 
 dotenv.config();
 
@@ -89,6 +90,7 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/verification', verificationRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Debug: Log all registered routes
 console.log('✅ Routes registered:');
@@ -99,6 +101,7 @@ console.log('  - /api/chat');
 console.log('  - /api/users');
 console.log('  - /api/upload');
 console.log('  - /api/verification');
+console.log('  - /api/notifications');
 
 // Health check
 app.get('/api/health', (req, res) => {

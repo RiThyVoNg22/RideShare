@@ -2,6 +2,7 @@ import express from 'express';
 import Booking from '../models/Booking.js';
 import Vehicle from '../models/Vehicle.js';
 import { protect } from '../middleware/auth.js';
+import { notifyBookingCreated, notifyBookingConfirmed, notifyBookingCancelled } from '../utils/notifications.js';
 
 const router = express.Router();
 
@@ -64,6 +65,10 @@ router.post('/', protect, async (req, res) => {
     // Update vehicle availability
     vehicle.available = false;
     await vehicle.save();
+
+    // Notify owner about new booking request
+    const renterName = `${req.user.firstName} ${req.user.lastName}`;
+    await notifyBookingCreated(booking, vehicle.ownerId, renterName, vehicle.name);
 
     res.status(201).json({
       success: true,
@@ -207,6 +212,10 @@ router.delete('/:id', protect, async (req, res) => {
       await vehicle.save();
     }
 
+    // Notify owner about cancellation
+    const renterName = `${req.user.firstName} ${req.user.lastName}`;
+    await notifyBookingCancelled(booking, booking.ownerId, false, renterName, booking.vehicleName);
+
     res.json({
       success: true,
       message: 'Booking cancelled successfully',
@@ -241,9 +250,15 @@ router.put('/:id/status', protect, async (req, res) => {
       });
     }
 
+    const oldStatus = booking.status;
     booking.status = status;
     booking.updatedAt = new Date();
     await booking.save();
+
+    // Notify renter if booking was confirmed
+    if (status === 'confirmed' && oldStatus !== 'confirmed') {
+      await notifyBookingConfirmed(booking, booking.userId, booking.ownerName || req.user.firstName, booking.vehicleName);
+    }
 
     // Update vehicle availability
     if (status === 'confirmed' || status === 'active') {

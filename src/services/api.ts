@@ -370,3 +370,36 @@ export const verificationAPI = {
   },
 };
 
+// Notifications API
+export const notificationsAPI = {
+  getAll: async (params?: { limit?: number; unreadOnly?: boolean }) => {
+    const queryParams = new URLSearchParams();
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.unreadOnly) queryParams.append('unreadOnly', 'true');
+    const url = `/notifications${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
+    return request(url);
+  },
+
+  getUnreadCount: async () => {
+    return request('/notifications/unread-count');
+  },
+
+  markAsRead: async (id: string) => {
+    return request(`/notifications/${id}/read`, {
+      method: 'PUT',
+    });
+  },
+
+  markAllAsRead: async () => {
+    return request('/notifications/read-all', {
+      method: 'PUT',
+    });
+  },
+
+  delete: async (id: string) => {
+    return request(`/notifications/${id}`, {
+      method: 'DELETE',
+    });
+  },
+};
+

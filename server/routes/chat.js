@@ -2,6 +2,7 @@ import express from 'express';
 import Chat from '../models/Chat.js';
 import Booking from '../models/Booking.js';
 import { protect } from '../middleware/auth.js';
+import { notifyMessageReceived } from '../utils/notifications.js';
 
 const router = express.Router();
 
@@ -135,16 +136,19 @@ router.post('/:chatId/messages', protect, async (req, res) => {
 
     // Determine receiver (handle both ObjectId and populated objects)
     const userId = req.user._id.toString();
-    const receiverId = chat.participants.find(p => {
+    const receiver = chat.participants.find(p => {
       const participantId = p._id?.toString ? p._id.toString() : p.toString();
       return participantId !== userId;
     });
+    
+    // Get receiver ID as string
+    const receiverId = receiver?._id?.toString ? receiver._id.toString() : receiver?.toString();
 
     // Add message
     const newMessage = {
       senderId: req.user._id,
       senderName: `${req.user.firstName} ${req.user.lastName}`,
-      receiverId,
+      receiverId: receiverId || receiver,
       message,
       read: false,
       timestamp: new Date()
@@ -154,6 +158,11 @@ router.post('/:chatId/messages', protect, async (req, res) => {
     chat.lastMessage = message;
     chat.lastMessageTime = new Date();
     await chat.save();
+
+    // Notify receiver about new message
+    if (receiverId && receiverId !== req.user._id.toString()) {
+      await notifyMessageReceived(receiverId, newMessage.senderName, chat._id);
+    }
 
     res.status(201).json({
       success: true,

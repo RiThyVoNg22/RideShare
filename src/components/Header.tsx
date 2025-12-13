@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Menu, X, Shield, DollarSign, Globe } from 'lucide-react';
 import { verificationAPI, adminAPI } from '../services/api';
+import NotificationBell from './NotificationBell';
 
 const Header: React.FC = () => {
   const { currentUser, logout } = useAuth();
@@ -153,6 +154,7 @@ const Header: React.FC = () => {
 
             {currentUser ? (
               <div className="flex items-center gap-3">
+                <NotificationBell />
                 {(currentUser.isAdmin || currentUser.role === 'admin') && (
                   <div className="flex items-center gap-2 bg-white/10 rounded-lg px-2 py-1 border border-white/20">
                     <Link

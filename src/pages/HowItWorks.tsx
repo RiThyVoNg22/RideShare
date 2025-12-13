@@ -15,28 +15,35 @@ const HowItWorks: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Page Header */}
-      <section className="page-header bg-primary-blue text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.howItWorks.title}</h1>
-          <p className="text-xl opacity-90">{t.howItWorks.subtitle}</p>
+      <section className="page-header relative bg-gradient-to-br from-primary-blue via-blue-600 to-primary-orange text-white py-20 overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6">{t.howItWorks.title}</h1>
+          <p className="text-xl md:text-2xl opacity-95 max-w-3xl mx-auto">{t.howItWorks.subtitle}</p>
         </div>
       </section>
 
       {/* How It Works - For Renters */}
-      <section className="how-it-works-section py-16 bg-white">
+      <section className="how-it-works-section py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4">
-          <div className="section-header text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">{t.howItWorks.forRenters}</h2>
-            <p className="text-lg text-gray-600">{t.howItWorks.forRentersDesc}</p>
+          <div className="section-header text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary-blue to-primary-orange bg-clip-text text-transparent">{t.howItWorks.forRenters}</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">{t.howItWorks.forRentersDesc}</p>
           </div>
           
-          <div className="steps-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="step-card bg-white p-8 rounded-lg shadow-md text-center relative border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="step-number absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-primary-orange rounded-full flex items-center justify-center text-white font-bold text-xl">
+          <div className="steps-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <div className="step-card group bg-white p-8 rounded-2xl shadow-lg text-center relative border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="step-number absolute -top-6 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                 1
               </div>
-              <div className="step-icon text-primary-blue text-5xl my-4">
-                <UserPlus className="w-12 h-12 mx-auto" />
+              <div className="step-icon my-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <UserPlus className="w-10 h-10 text-white" />
+                </div>
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step1Renter}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
@@ -64,12 +71,14 @@ const HowItWorks: React.FC = () => {
               </div>
             </div>
             
-            <div className="step-card bg-white p-8 rounded-lg shadow-md text-center relative border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="step-number absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-primary-orange rounded-full flex items-center justify-center text-white font-bold text-xl">
+            <div className="step-card group bg-white p-8 rounded-2xl shadow-lg text-center relative border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="step-number absolute -top-6 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                 2
               </div>
-              <div className="step-icon text-primary-blue text-5xl my-4">
-                <Search className="w-12 h-12 mx-auto" />
+              <div className="step-icon my-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <Search className="w-10 h-10 text-white" />
+                </div>
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step2Renter}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
@@ -97,12 +106,14 @@ const HowItWorks: React.FC = () => {
               </div>
             </div>
             
-            <div className="step-card bg-white p-8 rounded-lg shadow-md text-center relative border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="step-number absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-primary-orange rounded-full flex items-center justify-center text-white font-bold text-xl">
+            <div className="step-card group bg-white p-8 rounded-2xl shadow-lg text-center relative border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="step-number absolute -top-6 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                 3
               </div>
-              <div className="step-icon text-primary-blue text-5xl my-4">
-                <CalendarCheck className="w-12 h-12 mx-auto" />
+              <div className="step-icon my-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <CalendarCheck className="w-10 h-10 text-white" />
+                </div>
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step3Renter}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
@@ -130,12 +141,14 @@ const HowItWorks: React.FC = () => {
               </div>
             </div>
             
-            <div className="step-card bg-white p-8 rounded-lg shadow-md text-center relative border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="step-number absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-primary-orange rounded-full flex items-center justify-center text-white font-bold text-xl">
+            <div className="step-card group bg-white p-8 rounded-2xl shadow-lg text-center relative border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="step-number absolute -top-6 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                 4
               </div>
-              <div className="step-icon text-primary-blue text-5xl my-4">
-                <Key className="w-12 h-12 mx-auto" />
+              <div className="step-icon my-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <Key className="w-10 h-10 text-white" />
+                </div>
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step4Renter}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
@@ -167,20 +180,22 @@ const HowItWorks: React.FC = () => {
       </section>
 
       {/* How It Works - For Owners */}
-      <section className="how-it-works-section alt-bg py-16 bg-gray-50">
+      <section className="how-it-works-section alt-bg py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
-          <div className="section-header text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">{t.howItWorks.forOwners}</h2>
-            <p className="text-lg text-gray-600">{t.howItWorks.forOwnersDesc}</p>
+          <div className="section-header text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary-blue to-primary-orange bg-clip-text text-transparent">{t.howItWorks.forOwners}</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">{t.howItWorks.forOwnersDesc}</p>
           </div>
           
-          <div className="steps-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="step-card bg-white p-8 rounded-lg shadow-md text-center relative border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="step-number absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-primary-orange rounded-full flex items-center justify-center text-white font-bold text-xl">
+          <div className="steps-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <div className="step-card group bg-white p-8 rounded-2xl shadow-lg text-center relative border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="step-number absolute -top-6 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                 1
               </div>
-              <div className="step-icon text-primary-blue text-5xl my-4">
-                <UserCheck className="w-12 h-12 mx-auto" />
+              <div className="step-icon my-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <UserCheck className="w-10 h-10 text-white" />
+                </div>
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step1Owner}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
@@ -208,12 +223,14 @@ const HowItWorks: React.FC = () => {
               </div>
             </div>
             
-            <div className="step-card bg-white p-8 rounded-lg shadow-md text-center relative border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="step-number absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-primary-orange rounded-full flex items-center justify-center text-white font-bold text-xl">
+            <div className="step-card group bg-white p-8 rounded-2xl shadow-lg text-center relative border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="step-number absolute -top-6 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                 2
               </div>
-              <div className="step-icon text-primary-blue text-5xl my-4">
-                <Car className="w-12 h-12 mx-auto" />
+              <div className="step-icon my-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <Car className="w-10 h-10 text-white" />
+                </div>
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step2Owner}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
@@ -241,12 +258,14 @@ const HowItWorks: React.FC = () => {
               </div>
             </div>
             
-            <div className="step-card bg-white p-8 rounded-lg shadow-md text-center relative border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="step-number absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-primary-orange rounded-full flex items-center justify-center text-white font-bold text-xl">
+            <div className="step-card group bg-white p-8 rounded-2xl shadow-lg text-center relative border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="step-number absolute -top-6 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                 3
               </div>
-              <div className="step-icon text-primary-blue text-5xl my-4">
-                <Users className="w-12 h-12 mx-auto" />
+              <div className="step-icon my-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <Users className="w-10 h-10 text-white" />
+                </div>
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step3Owner}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
@@ -274,12 +293,14 @@ const HowItWorks: React.FC = () => {
               </div>
             </div>
             
-            <div className="step-card bg-white p-8 rounded-lg shadow-md text-center relative border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="step-number absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-primary-orange rounded-full flex items-center justify-center text-white font-bold text-xl">
+            <div className="step-card group bg-white p-8 rounded-2xl shadow-lg text-center relative border border-gray-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="step-number absolute -top-6 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-gradient-to-br from-primary-orange to-orange-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                 4
               </div>
-              <div className="step-icon text-primary-blue text-5xl my-4">
-                <DollarSign className="w-12 h-12 mx-auto" />
+              <div className="step-icon my-6">
+                <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <DollarSign className="w-10 h-10 text-white" />
+                </div>
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.howItWorks.step4Owner}</h3>
               <p className="text-gray-600 mb-4 leading-relaxed">
@@ -311,71 +332,71 @@ const HowItWorks: React.FC = () => {
       </section>
 
       {/* Safety & Security Features */}
-      <section className="safety-section py-16 bg-white">
+      <section className="safety-section py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4">
-          <div className="section-header text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">{t.howItWorks.safetyTitle}</h2>
-            <p className="text-lg text-gray-600">{t.howItWorks.safetySubtitle}</p>
+          <div className="section-header text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary-blue to-primary-orange bg-clip-text text-transparent">{t.howItWorks.safetyTitle}</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">{t.howItWorks.safetySubtitle}</p>
           </div>
           
-          <div className="safety-features grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="safety-feature text-center">
-              <div className="safety-icon w-20 h-20 bg-primary-orange rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="safety-features grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="safety-feature group text-center p-6 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+              <div className="safety-icon w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <Shield className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-2 text-gray-900">{t.howItWorks.idVerification}</h3>
               <p className="text-gray-600">{t.howItWorks.idVerificationDesc}</p>
             </div>
             
-            <div className="safety-feature text-center">
-              <div className="safety-icon w-20 h-20 bg-primary-orange rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="safety-feature group text-center p-6 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+              <div className="safety-icon w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <MapPin className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">{t.howItWorks.gpsTracking}</h3>
-              <p className="text-gray-600">{t.howItWorks.gpsTrackingDesc}</p>
+              <h3 className="text-xl font-bold mb-3 text-gray-900">{t.howItWorks.gpsTracking}</h3>
+              <p className="text-gray-600 leading-relaxed">{t.howItWorks.gpsTrackingDesc}</p>
             </div>
             
-            <div className="safety-feature text-center">
-              <div className="safety-icon w-20 h-20 bg-primary-orange rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="safety-feature group text-center p-6 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+              <div className="safety-icon w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <CreditCard className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">{t.howItWorks.securePayments}</h3>
-              <p className="text-gray-600">{t.howItWorks.securePaymentsDesc}</p>
+              <h3 className="text-xl font-bold mb-3 text-gray-900">{t.howItWorks.securePayments}</h3>
+              <p className="text-gray-600 leading-relaxed">{t.howItWorks.securePaymentsDesc}</p>
             </div>
             
-            <div className="safety-feature text-center">
-              <div className="safety-icon w-20 h-20 bg-primary-orange rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="safety-feature group text-center p-6 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+              <div className="safety-icon w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <Headphones className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">{t.howItWorks.support247}</h3>
-              <p className="text-gray-600">{t.howItWorks.support247Desc}</p>
+              <h3 className="text-xl font-bold mb-3 text-gray-900">{t.howItWorks.support247}</h3>
+              <p className="text-gray-600 leading-relaxed">{t.howItWorks.support247Desc}</p>
             </div>
             
-            <div className="safety-feature text-center">
-              <div className="safety-icon w-20 h-20 bg-primary-orange rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="safety-feature group text-center p-6 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+              <div className="safety-icon w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <FileText className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">Digital Contracts</h3>
-              <p className="text-gray-600">Clear rental agreements with terms and conditions for every transaction.</p>
+              <h3 className="text-xl font-bold mb-3 text-gray-900">Digital Contracts</h3>
+              <p className="text-gray-600 leading-relaxed">Clear rental agreements with terms and conditions for every transaction.</p>
             </div>
             
-            <div className="safety-feature text-center">
-              <div className="safety-icon w-20 h-20 bg-primary-orange rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="safety-feature group text-center p-6 rounded-xl hover:bg-white hover:shadow-lg transition-all duration-300">
+              <div className="safety-icon w-20 h-20 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <Star className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-gray-900">Rating System</h3>
-              <p className="text-gray-600">Transparent rating and review system builds trust and accountability.</p>
+              <h3 className="text-xl font-bold mb-3 text-gray-900">Rating System</h3>
+              <p className="text-gray-600 leading-relaxed">Transparent rating and review system builds trust and accountability.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="faq-section py-16 bg-gray-50">
+      <section className="faq-section py-20 bg-white">
         <div className="container mx-auto px-4 max-w-4xl">
-          <div className="section-header text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">Frequently Asked Questions</h2>
-            <p className="text-lg text-gray-600">Find answers to common questions about RideShare Local</p>
+          <div className="section-header text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary-blue to-primary-orange bg-clip-text text-transparent">Frequently Asked Questions</h2>
+            <p className="text-xl text-gray-600">Find answers to common questions about RideShare Local</p>
           </div>
           
           <div className="faq-container space-y-4">
@@ -401,7 +422,7 @@ const HowItWorks: React.FC = () => {
                 a: "Earnings depend on your vehicle type, location, and availability. Car owners typically earn $25-50/day, motorbike owners $6-12/day, and bicycle owners $3-8/day."
               }
             ].map((faq, index) => (
-              <div key={index} className="faq-item bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+              <div key={index} className="faq-item bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300">
                 <button
                   onClick={() => toggleFaq(index)}
                   className="faq-question w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
@@ -414,7 +435,7 @@ const HowItWorks: React.FC = () => {
                   )}
                 </button>
                 {openFaq === index && (
-                  <div className="faq-answer p-6 pt-0 text-gray-600 leading-relaxed">
+                  <div className="faq-answer p-6 pt-0 text-gray-600 leading-relaxed animate-fade-in">
                     <p>{faq.a}</p>
                   </div>
                 )}
@@ -425,18 +446,23 @@ const HowItWorks: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="cta-section py-16 bg-primary-blue text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t.howItWorks.readyToStart}</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+      <section className="cta-section py-24 relative bg-gradient-to-br from-primary-blue via-blue-600 to-primary-orange text-white overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-6">{t.howItWorks.readyToStart}</h2>
+          <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto opacity-95 leading-relaxed">
             {t.howItWorks.readyToStartDesc}
           </p>
           
           <div className="cta-buttons flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/rent" className="btn bg-primary-orange text-white hover:bg-orange-600 px-8 py-3 rounded-full font-semibold">
+            <Link to="/rent" className="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-blue font-semibold rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
               {t.howItWorks.findVehicle}
             </Link>
-            <Link to="/list-vehicle" className="btn bg-white text-primary-blue hover:bg-gray-100 px-8 py-3 rounded-full font-semibold">
+            <Link to="/list-vehicle" className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-primary-blue transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
               {t.nav.listVehicle}
             </Link>
           </div>

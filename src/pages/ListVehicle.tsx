@@ -354,24 +354,29 @@ const ListVehicle: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Page Header */}
-      <section className="page-header bg-primary-blue text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.listVehicle.title}</h1>
-          <p className="text-xl opacity-90">{t.listVehicle.subtitle}</p>
+      <section className="page-header relative bg-gradient-to-br from-primary-blue via-blue-600 to-primary-orange text-white py-20 overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6">{t.listVehicle.title}</h1>
+          <p className="text-xl md:text-2xl opacity-95 max-w-3xl mx-auto">{t.listVehicle.subtitle}</p>
         </div>
       </section>
 
       {/* Benefits Section */}
-      <section className="benefits-section py-16 bg-gray-50">
+      <section className="benefits-section py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4">
-          <div className="section-header text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-blue mb-4">{t.listVehicle.whyList}</h2>
-            <p className="text-lg text-gray-600">{t.listVehicle.whyListDesc}</p>
+          <div className="section-header text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary-blue to-primary-orange bg-clip-text text-transparent">{t.listVehicle.whyList}</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">{t.listVehicle.whyListDesc}</p>
           </div>
           
-          <div className="benefits-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="benefit-card bg-white p-8 rounded-lg shadow-md text-center hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="benefit-icon w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="benefits-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <div className="benefit-card group bg-white p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+              <div className="benefit-icon w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <DollarSign className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.listVehicle.earnIncome}</h3>
@@ -380,8 +385,8 @@ const ListVehicle: React.FC = () => {
               </p>
             </div>
             
-            <div className="benefit-card bg-white p-8 rounded-lg shadow-md text-center hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="benefit-icon w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="benefit-card group bg-white p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+              <div className="benefit-icon w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <Shield className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.listVehicle.verifiedRenters}</h3>
@@ -390,8 +395,8 @@ const ListVehicle: React.FC = () => {
               </p>
             </div>
             
-            <div className="benefit-card bg-white p-8 rounded-lg shadow-md text-center hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="benefit-icon w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="benefit-card group bg-white p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+              <div className="benefit-icon w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <MapPin className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.listVehicle.gpsTracking}</h3>
@@ -400,8 +405,8 @@ const ListVehicle: React.FC = () => {
               </p>
             </div>
             
-            <div className="benefit-card bg-white p-8 rounded-lg shadow-md text-center hover:shadow-lg transition-all hover:-translate-y-1">
-              <div className="benefit-icon w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="benefit-card group bg-white p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+              <div className="benefit-icon w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <CreditCard className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-900">{t.listVehicle.securePayments}</h3>
@@ -418,15 +423,15 @@ const ListVehicle: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="form-container max-w-4xl mx-auto">
             <div className="form-header text-center mb-12">
-              <h2 className="text-3xl font-bold text-primary-blue mb-4">
+              <h2 className="text-3xl md:text-4xl font-extrabold mb-4 bg-gradient-to-r from-primary-blue to-primary-orange bg-clip-text text-transparent">
                 {isEditMode ? t.listVehicle.editVehicle : t.listVehicle.listVehicle}
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-xl text-gray-600">
                 {isEditMode ? t.listVehicle.editDesc : t.listVehicle.listDesc}
               </p>
             </div>
             
-            <form onSubmit={handleSubmit} className="listing-form bg-white p-8 rounded-2xl shadow-md border border-gray-200">
+            <form onSubmit={handleSubmit} className="listing-form bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-100">
               {/* Vehicle Information */}
               <div className="form-section mb-8 pb-8 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-primary-blue mb-6 flex items-center gap-2">
@@ -443,7 +448,7 @@ const ListVehicle: React.FC = () => {
                       onChange={handleChange}
                       required
                       placeholder="e.g., Honda Click 2020"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     />
                   </div>
                   
@@ -454,7 +459,7 @@ const ListVehicle: React.FC = () => {
                       value={formData.type}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     >
                       <option value="">{t.listVehicle.selectType}</option>
                       <option value="car">{t.rent.car}</option>
@@ -474,7 +479,7 @@ const ListVehicle: React.FC = () => {
                       onChange={handleChange}
                       required
                       placeholder="e.g., Honda, Toyota, Trek"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     />
                   </div>
                   
@@ -487,7 +492,7 @@ const ListVehicle: React.FC = () => {
                       onChange={handleChange}
                       required
                       placeholder="e.g., Click, Camry, Mountain Bike"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     />
                   </div>
                 </div>
@@ -500,7 +505,7 @@ const ListVehicle: React.FC = () => {
                       value={formData.year}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     >
                       <option value="">{t.listVehicle.selectYear}</option>
                       {Array.from({ length: 15 }, (_, i) => 2024 - i).map(year => (
@@ -517,7 +522,7 @@ const ListVehicle: React.FC = () => {
                       value={formData.condition}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     >
                       <option value="">{t.listVehicle.selectCondition}</option>
                       <option value="excellent">{t.listVehicle.excellent}</option>
@@ -682,7 +687,7 @@ const ListVehicle: React.FC = () => {
                       value={formData.city}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     >
                       <option value="">{t.listVehicle.selectCity}</option>
                       <option value="phnom-penh">Phnom Penh</option>
@@ -703,7 +708,7 @@ const ListVehicle: React.FC = () => {
                       onChange={handleChange}
                       required
                       placeholder="e.g., Daun Penh, BKK1, Russian Market"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     />
                   </div>
                 </div>
@@ -756,7 +761,7 @@ const ListVehicle: React.FC = () => {
                       value={formData.availableFrom}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     />
                   </div>
                   
@@ -768,7 +773,7 @@ const ListVehicle: React.FC = () => {
                       value={formData.availableTo}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     />
                   </div>
                 </div>
@@ -790,7 +795,7 @@ const ListVehicle: React.FC = () => {
                       onChange={handleChange}
                       required
                       placeholder="Full name"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     />
                   </div>
                   
@@ -803,7 +808,7 @@ const ListVehicle: React.FC = () => {
                       onChange={handleChange}
                       required
                       placeholder="+855 XX XXX XXX"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/20 focus:outline-none hover:border-gray-300 transition-all"
                     />
                   </div>
                 </div>
