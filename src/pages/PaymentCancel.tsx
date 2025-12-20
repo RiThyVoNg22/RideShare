@@ -1,10 +1,8 @@
 import React from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { XCircle } from 'lucide-react';
 
 const PaymentCancel: React.FC = () => {
-  const [searchParams] = useSearchParams();
-  const bookingId = searchParams.get('booking_id');
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">

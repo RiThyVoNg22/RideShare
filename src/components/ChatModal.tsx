@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from './ToastProvider';
 import { chatAPI } from '../services/api';
-import { X, Send, MessageSquare, User } from 'lucide-react';
+import { X, Send, MessageSquare } from 'lucide-react';
 
 interface Message {
   _id?: string;
@@ -16,12 +16,12 @@ interface Message {
 
 interface Chat {
   _id: string;
-  bookingId: string;
+  bookingId?: string;
   participants: any[];
   vehicleName: string;
   lastMessage?: string;
   lastMessageTime?: string | Date;
-  messages: Message[];
+  messages?: Message[];
 }
 
 interface ChatModalProps {

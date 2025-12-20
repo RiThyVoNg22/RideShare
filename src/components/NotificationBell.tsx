@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Bell, Check, Trash2, X } from 'lucide-react';
 import { notificationsAPI } from '../services/api';
-import { useLanguage } from '../contexts/LanguageContext';
 import { Link } from 'react-router-dom';
 
 interface Notification {
@@ -16,7 +15,6 @@ interface Notification {
 }
 
 const NotificationBell: React.FC = () => {
-  const { t } = useLanguage();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);

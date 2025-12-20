@@ -209,7 +209,7 @@ const ProductDetail: React.FC = () => {
     );
   }
 
-  const { days, subtotal, serviceFee, commission, total } = calculateTotal();
+  const { days, subtotal, serviceFee, total } = calculateTotal();
   const images = vehicle.images 
     ? normalizeImageUrls(vehicle.images) 
     : (vehicle.mainPhoto ? [normalizeImageUrl(vehicle.mainPhoto)] : ['/RideShare/imge/placeholder.png']);

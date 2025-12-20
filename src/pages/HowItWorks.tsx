@@ -61,7 +61,7 @@ const HowItWorks: React.FC = () => {
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange font-bold mr-2">•</span>
-                    <span>{t.auth.phone} {t.common.verification || 'verification'}</span>
+                    <span>{t.auth.phone} verification</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange font-bold mr-2">•</span>

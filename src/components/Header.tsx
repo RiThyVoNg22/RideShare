@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Menu, X, Shield, DollarSign, Globe } from 'lucide-react';
-import { verificationAPI, adminAPI } from '../services/api';
+import { verificationAPI } from '../services/api';
 import NotificationBell from './NotificationBell';
 
 const Header: React.FC = () => {
@@ -15,11 +15,6 @@ const Header: React.FC = () => {
   const [showLangMenu, setShowLangMenu] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
-
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'km' : 'en');
-    setShowLangMenu(false);
-  };
 
   useEffect(() => {
     const loadPendingCount = async () => {

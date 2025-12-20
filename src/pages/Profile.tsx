@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
-import { bookingsAPI, vehiclesAPI, chatAPI, usersAPI, authAPI, uploadAPI } from '../services/api';
+import { bookingsAPI, vehiclesAPI, chatAPI, authAPI, uploadAPI } from '../services/api';
 import { normalizeImageUrl } from '../utils/imageUtils';
 import { 
   User, Calendar, MessageSquare, Car, Settings, 
   LogOut, Edit, Trash2, Eye, Bell, Lock,
   CheckCircle, XCircle, Clock, Shield,
-  MapPin, Star, Check, X, Power, Camera, Upload
+  MapPin, Star, Power, Camera
 } from 'lucide-react';
 import ChatModal from '../components/ChatModal';
 
@@ -224,7 +224,7 @@ const Profile: React.FC = () => {
 
   const handleOpenChat = (chat: Chat) => {
     // Ensure chat has required fields
-    if (!chat || (!chat._id && !chat.bookingId)) {
+    if (!chat || !chat._id) {
       showToast('Invalid chat data', 'error');
       return;
     }
@@ -471,7 +471,7 @@ const Profile: React.FC = () => {
               <Calendar className="w-4 h-4 inline mr-2" />
               Bookings
             </button>
-            {(currentUser.accountType === 'owner' || currentUser.accountType === 'both') && (
+            {(currentUser.accountType === 'list' || currentUser.accountType === 'both') && (
               <button
                 onClick={() => setActiveTab('requests')}
                 className={`px-6 py-4 font-semibold border-b-2 transition-colors whitespace-nowrap ${
@@ -888,7 +888,7 @@ const Profile: React.FC = () => {
                                   <p className="text-lg font-medium">
                                     {renter.firstName || ''} {renter.lastName || ''}
                                     {renter.idVerified && (
-                                      <CheckCircle className="w-4 h-4 inline ml-2 text-green-500" title="ID Verified" />
+                                      <CheckCircle className="w-4 h-4 inline ml-2 text-green-500" />
                                     )}
                                   </p>
                                 </div>
@@ -1087,9 +1087,9 @@ const Profile: React.FC = () => {
                   {chats.map((chat) => {
                     const otherParticipant = chat.participants?.find(
                       (p: any) => (p._id || p)?.toString() !== currentUser?._id?.toString()
-                    );
-                    const participantName = otherParticipant 
-                      ? `${otherParticipant.firstName || ''} ${otherParticipant.lastName || ''}`.trim() || 'Other user'
+                    ) as any;
+                    const participantName = otherParticipant && typeof otherParticipant === 'object' && otherParticipant !== null && 'firstName' in otherParticipant
+                      ? `${(otherParticipant as any).firstName || ''} ${(otherParticipant as any).lastName || ''}`.trim() || 'Other user'
                       : 'Other user';
                     
                     return (

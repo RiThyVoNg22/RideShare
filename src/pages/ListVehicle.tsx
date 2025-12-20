@@ -13,7 +13,7 @@ const ListVehicle: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const editVehicleId = searchParams.get('edit');
-  const [isEditMode, setIsEditMode] = useState(!!editVehicleId);
+  const [isEditMode] = useState(!!editVehicleId);
   const [loading, setLoading] = useState(false);
   const [loadingVehicle, setLoadingVehicle] = useState(false);
   const [formData, setFormData] = useState({
@@ -98,9 +98,9 @@ const ListVehicle: React.FC = () => {
           availableDays: vehicle.availability?.days || [],
           availableFrom: vehicle.availability?.timeFrom || '09:00',
           availableTo: vehicle.availability?.timeTo || '17:00',
-          ownerName: vehicle.contact?.name || `${currentUser.firstName} ${currentUser.lastName}`,
-          contactNumber: vehicle.contact?.phone || currentUser.phone || '',
-          contactEmail: vehicle.contact?.email || currentUser.email || '',
+          ownerName: vehicle.contact?.name || (currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : ''),
+          contactNumber: vehicle.contact?.phone || currentUser?.phone || '',
+          contactEmail: vehicle.contact?.email || currentUser?.email || '',
           features: vehicle.features || [],
           images: [],
           agreeTerms: true,

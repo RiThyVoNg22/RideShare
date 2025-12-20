@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle, Loader } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 
 const PaymentSuccess: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const { showToast } = useToast();
   const [loading, setLoading] = useState(true);
   const [verified, setVerified] = useState(false);

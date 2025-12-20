@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useToast } from '../components/ToastProvider';
-import { Eye, EyeOff, Mail, Lock, User, Phone, Shield, Info, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, Phone, Shield, Info, CheckCircle, XCircle } from 'lucide-react';
 
 const Auth: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Shield, MapPin, DollarSign, Smartphone, Search, Car, Bike, ArrowRight, CheckCircle } from 'lucide-react';
+import { Shield, MapPin, DollarSign, Smartphone, Search, Car, Bike, ArrowRight } from 'lucide-react';
 
 const Home: React.FC = () => {
   const { t } = useLanguage();

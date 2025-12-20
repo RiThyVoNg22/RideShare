@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
-import { verificationAPI, uploadAPI, usersAPI } from '../services/api';
+import { verificationAPI, uploadAPI } from '../services/api';
 import Modal from '../components/Modal';
 import { 
   Shield, Upload, X, CheckCircle, Clock, 
-  Camera, FileText, AlertCircle, ArrowRight
+  Camera, AlertCircle
 } from 'lucide-react';
 
 interface UploadedFile {
@@ -15,7 +15,7 @@ interface UploadedFile {
 }
 
 const VerifyID: React.FC = () => {
-  const { currentUser, updateProfile } = useAuth();
+  const { currentUser } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -158,14 +158,6 @@ const VerifyID: React.FC = () => {
 
       if (!verificationResponse.success) {
         throw new Error(verificationResponse.message || 'Failed to submit verification');
-      }
-
-      // Update user profile to reflect pending status
-      try {
-        await updateProfile({ idVerificationStatus: 'pending' });
-      } catch (profileError) {
-        console.error('Failed to update profile:', profileError);
-        // Don't fail the whole submission if profile update fails
       }
 
       setUploading(false);

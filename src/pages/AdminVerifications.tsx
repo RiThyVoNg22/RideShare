@@ -6,7 +6,7 @@ import { verificationAPI } from '../services/api';
 import Modal from '../components/Modal';
 import { 
   Shield, Clock, CheckCircle, XCircle, Eye, 
-  AlertCircle, User, Calendar, FileText, Image as ImageIcon
+  AlertCircle, User
 } from 'lucide-react';
 
 interface Verification {
