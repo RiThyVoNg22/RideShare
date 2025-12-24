@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Send, Bot, User as UserIcon, HelpCircle, Sparkles, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User as UserIcon, HelpCircle, Sparkles } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -17,13 +17,12 @@ interface Message {
 }
 
 const ChatBot: React.FC = () => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [conversationContext, setConversationContext] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -290,7 +289,6 @@ const ChatBot: React.FC = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
-    setConversationContext(prev => [...prev, inputText.toLowerCase()].slice(-3)); // Keep last 3 messages
     const currentInput = inputText;
     setInputText('');
     setIsTyping(true);

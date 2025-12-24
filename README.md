@@ -38,7 +38,10 @@ npm install
 **Frontend** (create `.env` in root):
 ```
 VITE_API_URL=http://localhost:5001/api
+VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 ```
+
+> **Note**: To enable Google Maps location picker, get your API key from [Google Cloud Console](https://console.cloud.google.com/apis/credentials). Enable "Maps JavaScript API" and "Places API".
 
 **Backend** (create `.env` in `server/` folder):
 ```

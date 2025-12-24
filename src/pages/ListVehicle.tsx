@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useToast } from '../components/ToastProvider';
 import { vehiclesAPI, uploadAPI } from '../services/api';
 import { DollarSign, Shield, MapPin, CreditCard } from 'lucide-react';
+import GooglePlacesInput from '../components/GooglePlacesInput';
 
 const ListVehicle: React.FC = () => {
   const { t } = useLanguage();
@@ -714,16 +715,49 @@ const ListVehicle: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                  <label className="block text-sm font-semibold mb-2">{t.listVehicle.pickupLocation}</label>
-                  <textarea
-                    name="address"
+                  <label className="block text-sm font-semibold mb-2 flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-primary-orange" />
+                    {t.listVehicle.pickupLocation}
+                  </label>
+                  <GooglePlacesInput
                     value={formData.address}
-                    onChange={handleChange}
-                    rows={3}
+                    onChange={(address, placeData) => {
+                      setFormData(prev => ({ ...prev, address }));
+                      // Optionally update city/district from place data
+                      if (placeData?.address_components) {
+                        const components = placeData.address_components;
+                        const cityComponent = components.find((comp: any) => 
+                          comp.types.includes('administrative_area_level_1') || 
+                          comp.types.includes('locality')
+                        );
+                        const districtComponent = components.find((comp: any) => 
+                          comp.types.includes('sublocality') || 
+                          comp.types.includes('sublocality_level_1')
+                        );
+                        
+                        if (cityComponent && !formData.city) {
+                          // Try to match city
+                          const cityName = cityComponent.long_name.toLowerCase();
+                          if (cityName.includes('phnom penh')) {
+                            setFormData(prev => ({ ...prev, city: 'phnom-penh' }));
+                          } else if (cityName.includes('siem reap')) {
+                            setFormData(prev => ({ ...prev, city: 'siem-reap' }));
+                          }
+                        }
+                        
+                        if (districtComponent && !formData.district) {
+                          setFormData(prev => ({ ...prev, district: districtComponent.long_name }));
+                        }
+                      }
+                    }}
+                    placeholder="Search for pickup location or click map to select..."
                     required
-                    placeholder="Provide detailed pickup location and any landmarks..."
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-orange focus:outline-none"
+                    city={formData.city}
                   />
+                  <p className="mt-2 text-xs text-gray-500 flex items-center gap-1">
+                    <i className="fas fa-info-circle text-primary-orange"></i>
+                    Search for your location or use the map to pinpoint the exact pickup spot
+                  </p>
                 </div>
               </div>
 
